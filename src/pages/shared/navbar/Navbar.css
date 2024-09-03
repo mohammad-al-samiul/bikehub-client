@@ -1,0 +1,6 @@
+.menu li > *:not(ul, .menu-title, details, .btn):active {
+  @apply text-white;
+}
+.menu li > *:not(ul, .menu-title, details, .btn).active {
+  color: white;
+}
