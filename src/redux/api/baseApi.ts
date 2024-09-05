@@ -9,14 +9,16 @@ import { RootState } from "../store";
 import { logOut, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl:
-    "https://bike-rental-api-with-typescript-mongoose-express.vercel.app/api",
+  baseUrl: "http://localhost:5000/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+
+    // If we have a token set in state, let's assume that we should be passing it.
     if (token) {
       headers.set("authorization", `${token}`);
     }
+
     return headers;
   },
 });
@@ -27,24 +29,25 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
+
   if (result.error && result.error.status === 401) {
-    console.log("sending refresh token");
-    const res = await fetch(
-      `https://bike-rental-api-with-typescript-mongoose-express.vercel.app/api/auth/refresh-token`,
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
+    const res = await fetch(`http://localhost:5000/api/auth/refresh-token`, {
+      method: "POST",
+      credentials: "include",
+    });
+
     const refreshResult = await res.json();
+    console.log("refresh result", refreshResult);
+
     if (refreshResult.data) {
       const user = (api.getState() as RootState).auth.user;
       api.dispatch(
         setUser({
-          user,
-          token: refreshResult.data.token,
+          user: user,
+          token: refreshResult.data.accessToken,
         })
       );
+
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logOut());
