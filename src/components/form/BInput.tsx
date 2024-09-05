@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 type TInputProps = {
   type: string;
@@ -9,9 +9,10 @@ type TInputProps = {
 const BInput = ({ type, name, label }: TInputProps) => {
   const {
     formState: { errors },
-  } = useForm();
+  } = useFormContext();
 
-  console.log("formError", errors);
+  const errorMessage = errors[name]?.message as string | undefined;
+
   return (
     <div style={{ marginBottom: "15px" }}>
       {label && <label htmlFor={name}>{label}</label>}
@@ -29,6 +30,7 @@ const BInput = ({ type, name, label }: TInputProps) => {
           />
         )}
       />
+      {errorMessage && <p className="text-red-600"> {errorMessage}</p>}
     </div>
   );
 };
