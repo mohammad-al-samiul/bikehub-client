@@ -1,5 +1,6 @@
+import Spinner from "../../components/spinner/Spinner";
 import { useGetBikesQuery } from "../../redux/features/bike/bikeApi";
-import Bike from "./Bike";
+import BikeCard from "./BikeCard";
 
 export type TBikeProps = {
   bikeImage: string;
@@ -15,14 +16,18 @@ export type TBikeProps = {
 };
 
 const Bikes = () => {
-  const { data } = useGetBikesQuery([]);
+  const { data, isLoading } = useGetBikesQuery([]);
 
-  const bikes = data.data;
+  const bikes = data?.data;
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center ">
-      {bikes.map((bike: TBikeProps) => (
-        <Bike key={bike._id} bike={bike} />
-      ))}
+      {bikes &&
+        bikes?.map((bike: TBikeProps) => (
+          <BikeCard key={bike._id} bike={bike} />
+        ))}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { TBikeProps } from "./Bikes";
 
 const Bike = ({ bike }: { bike: TBikeProps }) => {
@@ -22,7 +23,9 @@ const Bike = ({ bike }: { bike: TBikeProps }) => {
           </div>
         </div>
         <div className="card-actions justify-center">
-          <button className="btn btn-accent text-white">Buy Now</button>
+          <Link to={`${bike._id}`} className="btn btn-accent text-white">
+            Buy Now
+          </Link>
         </div>
       </div>
     </div>
