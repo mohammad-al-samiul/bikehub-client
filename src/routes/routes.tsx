@@ -5,6 +5,7 @@ import ContactPage from "../pages/contact/Contact";
 import LoginPage from "../pages/login/Login";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../pages/dashboard/Dashboard";
+import Bikes from "../pages/bikes/Bikes";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <HomePage />,
+      },
+      {
+        path: "bikes",
+        element: <Bikes />,
       },
       {
         path: "contact",

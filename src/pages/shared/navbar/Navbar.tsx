@@ -26,6 +26,10 @@ const Navbar = () => {
       path: "home",
     },
     {
+      label: "Bikes",
+      path: "bikes",
+    },
+    {
       label: "Contact",
       path: "contact",
     },
@@ -102,7 +106,7 @@ const Navbar = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={"/home"}>Dashboard</NavLink>
+                  <NavLink to={"/dashboard"}>Dashboard</NavLink>
                 </li>
                 <li onClick={handleLogout}>
                   <button className="text-red-500 font-bold">Logout</button>
