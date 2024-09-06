@@ -9,7 +9,7 @@ import {
 type TFormProps = {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactNode;
-  defaultValues: Record<string, any>;
+  defaultValues?: Record<string, any>;
 };
 
 const BForm = ({ onSubmit, children, defaultValues }: TFormProps) => {

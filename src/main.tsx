@@ -6,6 +6,8 @@ import router from "./routes/routes.tsx";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

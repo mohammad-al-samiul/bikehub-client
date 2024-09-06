@@ -7,6 +7,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Bikes from "../pages/bikes/Bikes";
 import BikeDesc from "../pages/bikes/BikeDesc";
+import Booking from "../pages/booking/Booking";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "bikes/:id",
         element: <BikeDesc />,
+      },
+      {
+        path: "booking/:id",
+        element: <Booking />,
       },
       {
         path: "contact",

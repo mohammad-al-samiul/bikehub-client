@@ -1,7 +1,6 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetSingleBikeQuery } from "../../redux/features/bike/bikeApi";
 import { TBikeProps } from "./Bikes";
-import Modals from "../modals/Modals";
 
 const BikeDesc = () => {
   const { id } = useParams();
@@ -33,17 +32,9 @@ const BikeDesc = () => {
             {bike?.pricePerHour}
           </p>
 
-          <button
-            className="btn btn-accent text-white"
-            onClick={() =>
-              (
-                document.getElementById(bike?._id) as HTMLDialogElement
-              )?.showModal()
-            }
-          >
-            Booked Now
-          </button>
-          <Modals id={bike?._id} />
+          <Link to={`/booking/${bike?._id}`}>
+            <button className="btn btn-accent text-white">Booked Now</button>
+          </Link>
         </div>
       </div>
     </div>
