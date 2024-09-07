@@ -6,7 +6,6 @@ const BikeDesc = () => {
   const { id } = useParams();
   const { data } = useGetSingleBikeQuery(id);
   const bike: TBikeProps = data?.data;
-  console.log(bike);
 
   return (
     <div className="hero flex justify-start  w-full shadow-xl rounded-lg ">
