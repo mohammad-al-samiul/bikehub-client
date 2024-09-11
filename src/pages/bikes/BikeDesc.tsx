@@ -31,9 +31,15 @@ const BikeDesc = () => {
             {bike?.pricePerHour}
           </p>
 
-          <Link to={`/booking/${bike?._id}`}>
-            <button className="btn btn-accent text-white">Booked Now</button>
-          </Link>
+          {bike?.isAvailable ? (
+            <Link to={`/booking/${bike?._id}`}>
+              <button className="btn btn-accent text-white">Book Now</button>
+            </Link>
+          ) : (
+            <button className="btn btn-accent text-white btn-disabled" disabled>
+              Book Now
+            </button>
+          )}
         </div>
       </div>
     </div>

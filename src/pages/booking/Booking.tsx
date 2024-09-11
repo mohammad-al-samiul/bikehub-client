@@ -58,7 +58,7 @@ const Booking = () => {
     totalCost,
     isReturned: false,
   };
-  console.log("rentInfo : ", rentInfo);
+
   return (
     <div className="flex justify-between">
       <DateRangePicker
