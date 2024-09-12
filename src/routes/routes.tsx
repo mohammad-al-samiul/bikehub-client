@@ -10,6 +10,8 @@ import BikeDesc from "../pages/bikes/BikeDesc";
 import Booking from "../pages/booking/Booking";
 import Signup from "../pages/signup/Signup";
 import SignupSuccess from "../pages/signup/SignupSuccess";
+import { userRoutes } from "./user.routes";
+import { adminRoutes } from "./admin.routes";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,24 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/dashboard/user",
+    element: (
+      <ProtectedRoutes role="user">
+        <Dashboard />
+      </ProtectedRoutes>
+    ),
+    children: userRoutes,
+  },
+  {
+    path: "/dashboard/admin",
+    element: (
+      <ProtectedRoutes role="admin">
+        <Dashboard />
+      </ProtectedRoutes>
+    ),
+    children: adminRoutes,
   },
 ]);
 
