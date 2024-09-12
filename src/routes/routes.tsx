@@ -8,6 +8,8 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import Bikes from "../pages/bikes/Bikes";
 import BikeDesc from "../pages/bikes/BikeDesc";
 import Booking from "../pages/booking/Booking";
+import Signup from "../pages/signup/Signup";
+import SignupSuccess from "../pages/signup/SignupSuccess";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
+      },
+      {
+        path: "sign-up-success",
+        element: <SignupSuccess />,
       },
 
       {

@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../redux/hook";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Helmet } from "react-helmet";
 
 export type TUser = {
   email: string;
@@ -20,7 +21,6 @@ const LoginPage = () => {
 
   let navigate = useNavigate();
   let location = useLocation();
-  let from = location.state?.from?.pathname || "/";
 
   const defaultValues = {
     email: "alsamiul123@gmail.com",
@@ -37,26 +37,33 @@ const LoginPage = () => {
       const toastId = toast.loading("Logged in");
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.token);
+      const { role }: any = user;
+      //console.log("login user", user);
       dispatch(
         setUser({
           user,
           token: res.token,
         })
       );
+      if (location?.state?.targetPath) {
+        return navigate(location?.state?.targetPath, { replace: true });
+      }
       toast.success("Logged in successful", { id: toastId, duration: 2000 });
-      navigate(from, { replace: true });
+      return navigate(`/dashboard/${role}`, { replace: true });
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="w-full max-w-xs">
-      <BForm onSubmit={onSubmit} defaultValues={defaultValues}>
-        <BInput type="email" name="email" label="Email" />
-        <BInput type="password" name="password" label="Password" />
-        <BSubmit value="Login" />
-      </BForm>
+    <div>
+      <div className="w-full max-w-xs">
+        <BForm onSubmit={onSubmit} defaultValues={defaultValues}>
+          <BInput type="email" name="email" label="Email" />
+          <BInput type="password" name="password" label="Password" />
+          <BSubmit value="Login" />
+        </BForm>
+      </div>
     </div>
   );
 };
