@@ -1,33 +1,67 @@
-import BikesManagement from "../pages/dashboard/BikesManagement";
-import Coupons from "../pages/dashboard/Coupons";
-import Profile from "../pages/dashboard/Profile";
-import Rentals from "../pages/dashboard/Rentals";
-import UserManagement from "../pages/dashboard/UserManagement";
-import Users from "../pages/dashboard/Users";
+import AdminDashboard from "../pages/dashboard/admin/AdminDashboard";
+import BikesManagement from "../pages/dashboard/admin/BikesManagement";
+import UserManagement from "../pages/dashboard/admin/UserManagement";
+import Profile from "../pages/dashboard/user/Profile";
 
-export const adminRoutes = [
+// export const adminRoutes = [
+//   {
+//     index: true,
+//     element: <Profile />,
+//   },
+//   {
+//     path: "manage-bikes",
+//     element: <BikesManagement />,
+//   },
+//   {
+//     path: "manage-users",
+//     element: <UserManagement />,
+//   },
+// ];
+
+export const adminPaths = [
   {
-    index: true,
+    name: "Dashboard",
+    path: "dashboard",
+    element: <AdminDashboard />,
+  },
+  {
+    name: "Profile",
+    path: "profile",
     element: <Profile />,
   },
   {
-    path: "manage-bikes",
+    name: "Manage Bike",
+    path: "manage-bike",
     element: <BikesManagement />,
   },
   {
-    path: "manage-users",
+    name: "User Management",
+    path: "manage-user",
     element: <UserManagement />,
   },
-  {
-    path: "rentals",
-    element: <Rentals />,
-  },
-  {
-    path: "users",
-    element: <Users />,
-  },
-  {
-    path: "coupons",
-    element: <Coupons />,
-  },
+  // {
+  //   name: "User Management",
+  //   children: [
+  //     {
+  //       name: "Create Admin",
+  //       path: "create-admin",
+  //       element: <CreateAdmin />,
+  //     },
+  //     {
+  //       name: "Create Faculty",
+  //       path: "create-faculty",
+  //       element: <CreateFaculty />,
+  //     },
+  //     {
+  //       name: "Create Student",
+  //       path: "create-student",
+  //       element: <CreateStudent />,
+  //     },
+  //     {
+  //       name: "Create Member",
+  //       path: "create-member",
+  //       element: <CreateStudent />,
+  //     },
+  //   ],
+  // },
 ];

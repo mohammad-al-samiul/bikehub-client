@@ -1,7 +1,7 @@
-import DashboardLayout from "./components/layouts/DashboardLayout";
+import DashboardLayout from "./components/ui/DashboardLayout";
 import { useGetCurrentMode } from "./redux/features/theme/themeSlice";
 import { useAppSelector } from "./redux/hook";
-import ProtectedRoutes from "./routes/ProtectedRoutes";
+import ProtectedRoutes from "./components/layouts/ProtectedRoutes";
 
 const Dashboard = () => {
   const mode = useAppSelector(useGetCurrentMode);
