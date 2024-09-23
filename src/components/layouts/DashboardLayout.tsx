@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Layout, theme } from "antd";
-
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const DashboardLayout: React.FC = () => {
   const {
@@ -12,9 +12,8 @@ const DashboardLayout: React.FC = () => {
   } = theme.useToken();
 
   return (
-    <Layout>
-      <Sidebar theme="dark" />
-
+    <Layout style={{ height: "100vh" }}>
+      <Sidebar toggleTheme="dark" />
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: "24px 16px 0" }}>
@@ -26,12 +25,9 @@ const DashboardLayout: React.FC = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+            <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );

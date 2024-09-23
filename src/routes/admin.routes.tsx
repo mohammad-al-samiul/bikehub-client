@@ -1,29 +1,11 @@
-import AdminDashboard from "../pages/dashboard/admin/AdminDashboard";
 import BikesManagement from "../pages/dashboard/admin/BikesManagement";
-import UserManagement from "../pages/dashboard/admin/UserManagement";
-import Profile from "../pages/dashboard/user/Profile";
+import MangageUser from "../pages/dashboard/admin/ManageUser";
 
-// export const adminRoutes = [
-//   {
-//     index: true,
-//     element: <Profile />,
-//   },
-//   {
-//     path: "manage-bikes",
-//     element: <BikesManagement />,
-//   },
-//   {
-//     path: "manage-users",
-//     element: <UserManagement />,
-//   },
-// ];
+import Users from "../pages/dashboard/admin/Users";
+import Profile from "../pages/dashboard/user/Profile";
+import Rentals from "../pages/dashboard/user/Rentals";
 
 export const adminPaths = [
-  {
-    name: "Dashboard",
-    path: "dashboard",
-    element: <AdminDashboard />,
-  },
   {
     name: "Profile",
     path: "profile",
@@ -36,32 +18,22 @@ export const adminPaths = [
   },
   {
     name: "User Management",
-    path: "manage-user",
-    element: <UserManagement />,
+    children: [
+      {
+        name: "Manage User",
+        path: "manage-user",
+        element: <MangageUser />,
+      },
+      {
+        name: "Rentals",
+        path: "rentals",
+        element: <Rentals />,
+      },
+      {
+        name: "All Users",
+        path: "users",
+        element: <Users />,
+      },
+    ],
   },
-  // {
-  //   name: "User Management",
-  //   children: [
-  //     {
-  //       name: "Create Admin",
-  //       path: "create-admin",
-  //       element: <CreateAdmin />,
-  //     },
-  //     {
-  //       name: "Create Faculty",
-  //       path: "create-faculty",
-  //       element: <CreateFaculty />,
-  //     },
-  //     {
-  //       name: "Create Student",
-  //       path: "create-student",
-  //       element: <CreateStudent />,
-  //     },
-  //     {
-  //       name: "Create Member",
-  //       path: "create-member",
-  //       element: <CreateStudent />,
-  //     },
-  //   ],
-  // },
 ];

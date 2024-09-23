@@ -17,10 +17,10 @@ const userRole = {
 };
 
 type TSidebarProps = {
-  theme?: "dark" | "light";
+  toggleTheme?: "dark" | "light";
 };
 
-const Sidebar: React.FC<TSidebarProps> = ({ theme = "dark" }) => {
+const Sidebar: React.FC<TSidebarProps> = ({ toggleTheme = "dark" }) => {
   const token = useAppSelector(currentToken);
 
   let user;
@@ -46,7 +46,7 @@ const Sidebar: React.FC<TSidebarProps> = ({ theme = "dark" }) => {
 
   return (
     <Sider
-      theme={theme}
+      theme={toggleTheme}
       breakpoint="lg"
       collapsedWidth="0"
       style={{ height: "100vh", position: "sticky", top: "0", left: "0" }}
@@ -60,13 +60,13 @@ const Sidebar: React.FC<TSidebarProps> = ({ theme = "dark" }) => {
           alignItems: "center",
         }}
       >
-        <h1>PH Uni</h1>
+        <h1 className="font-bold text-xl">Bike Hub</h1>
       </div>
       <Menu
-        theme="dark"
+        theme={toggleTheme}
         mode="inline"
         defaultSelectedKeys={["4"]}
-        items={sidebarItems as any}
+        items={sidebarItems}
       />
     </Sider>
   );

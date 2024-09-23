@@ -1,5 +1,9 @@
 const Profile = () => {
-  return <div>profile</div>;
+  return (
+    <div>
+      <h1>admin profile</h1>
+    </div>
+  );
 };
 
 export default Profile;

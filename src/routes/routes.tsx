@@ -9,15 +9,12 @@ import BikeDesc from "../pages/bikes/BikeDesc";
 import Booking from "../pages/booking/Booking";
 import Signup from "../pages/signup/Signup";
 import SignupSuccess from "../pages/signup/SignupSuccess";
-import ProtectedRoutes from "../components/layouts/ProtectedRoutes";
 
-import { adminPaths } from "./admin.routes";
+import DashboardLayout from "../components/layouts/DashboardLayout";
 
 import { routeGenerator } from "../utils/routesGenerator";
-import { userPaths } from "./user.routes";
-import AdminDashboard from "../pages/dashboard/admin/AdminDashboard";
-import UserDashboard from "../pages/dashboard/user/UserDashboard";
-import DashboardLayout from "../components/layouts/DashboardLayout";
+import { adminPaths } from "./admin.routes";
+import ProtectedRoutes from "../components/layouts/ProtectedRoutes";
 
 const router = createBrowserRouter([
   {
@@ -66,36 +63,14 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: "/dashboard",
-  //   element: <DashboardLayout />,
-  // },
-  // {
-  //   path: "/dashboard/user",
-  //   element: (
-  //     <ProtectedRoutes role="admin">
-  //       <DashboardLayout />
-  //     </ProtectedRoutes>
-  //   ),
-  //   children: userRoutes,
-  // },
   {
-    path: "/dashboard/admin",
+    path: "/admin",
     element: (
       <ProtectedRoutes role="admin">
         <DashboardLayout />
       </ProtectedRoutes>
     ),
     children: routeGenerator(adminPaths),
-  },
-  {
-    path: "/dashboard/user",
-    element: (
-      <ProtectedRoutes role="user">
-        <DashboardLayout />
-      </ProtectedRoutes>
-    ),
-    children: routeGenerator(userPaths),
   },
 ]);
 

@@ -49,7 +49,7 @@ const LoginPage = () => {
         return navigate(location?.state?.targetPath, { replace: true });
       }
       toast.success("Logged in successful", { id: toastId, duration: 2000 });
-      return navigate(`/dashboard/${role}`, { replace: true });
+      return navigate(`/${role}/profile`, { replace: true });
     } catch (error) {
       console.log(error);
     }
