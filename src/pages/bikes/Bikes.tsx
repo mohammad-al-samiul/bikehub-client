@@ -1,4 +1,4 @@
-import Spinner from "../../components/spinner/Spinner";
+import Spinner from "../../components/ui/spinner/Spinner";
 import { useGetBikesQuery } from "../../redux/features/bike/bikeApi";
 import BikeCard from "./BikeCard";
 

@@ -7,7 +7,7 @@ import { currentUser } from "../../redux/features/auth/authSlice";
 
 import { useParams } from "react-router-dom";
 import { useGetSingleBikeQuery } from "../../redux/features/bike/bikeApi";
-import Spinner from "../../components/spinner/Spinner";
+import Spinner from "../../components/ui/spinner/Spinner";
 import { formateTheDate } from "../dateFuntionality/formatTheDate";
 import { calculateRentCost } from "../dateFuntionality/calculateRentCost";
 
