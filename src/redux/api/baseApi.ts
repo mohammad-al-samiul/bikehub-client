@@ -29,6 +29,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
+  console.log("basequery", result);
 
   if (result.error && result.error.status === 401) {
     const res = await fetch(`http://localhost:5000/api/auth/refresh-token`, {
@@ -58,6 +59,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
+  tagTypes: ["user", "bike", "rental"],
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
 });

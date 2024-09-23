@@ -91,14 +91,13 @@ const DashboardLayout: React.FC = () => {
       <Sidebar toggleTheme="dark" />
       <Layout>
         <Header
-          style={{
-            position: "sticky",
-            top: "0",
-            left: "0",
-            zIndex: 0,
-            padding: 0,
-            // background: colorBgContainer,
-          }}
+        // style={{
+        //   top: "0",
+        //   left: "0",
+        //   zIndex: 0,
+        //   padding: 0,
+        //   // background: colorBgContainer,
+        // }}
         >
           <div className="flex items-center justify-end gap-3 mr-4 h-16">
             <div className="text-white">
