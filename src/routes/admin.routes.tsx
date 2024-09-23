@@ -4,6 +4,7 @@ import MangageUser from "../pages/dashboard/admin/ManageUser";
 import Users from "../pages/dashboard/admin/Users";
 import Profile from "../pages/dashboard/user/Profile";
 import Rentals from "../pages/dashboard/user/Rentals";
+import Coupons from "../pages/dashboard/admin/Coupons";
 
 export const adminPaths = [
   {
@@ -33,6 +34,11 @@ export const adminPaths = [
         name: "All Users",
         path: "users",
         element: <Users />,
+      },
+      {
+        name: "Coupons",
+        path: "coupons",
+        element: <Coupons />,
       },
     ],
   },

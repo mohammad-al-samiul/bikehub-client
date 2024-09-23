@@ -15,6 +15,7 @@ import DashboardLayout from "../components/layouts/DashboardLayout";
 import { routeGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import ProtectedRoutes from "../components/layouts/ProtectedRoutes";
+import { userPaths } from "./user.routes";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,15 @@ const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
     children: routeGenerator(adminPaths),
+  },
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoutes role="user">
+        <DashboardLayout />
+      </ProtectedRoutes>
+    ),
+    children: routeGenerator(userPaths),
   },
 ]);
 

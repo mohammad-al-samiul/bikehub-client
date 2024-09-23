@@ -17,10 +17,6 @@ const Profile = () => {
   const { name, email, phone, address, role } = data.data;
   return (
     <div className="md:pt-10 pt-5">
-      <Helmet>
-        <title>Profile -BikeHub</title>
-      </Helmet>
-
       <>
         <h4 className="md:text-3xl text-xl font-semibold text-center ">
           Hey, <span className="text-accent font-bold">{name}!</span> It's great

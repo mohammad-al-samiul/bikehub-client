@@ -5,21 +5,85 @@ import "./Navbar.css";
 import { useSelector } from "react-redux";
 
 import { currentUser, logOut } from "../../../redux/features/auth/authSlice";
-import { useAppDispatch } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { toast } from "sonner";
+import {
+  CircleUserRound,
+  Home,
+  LogOut,
+  Moon,
+  SunMoon,
+  User,
+} from "lucide-react";
+import { Dropdown, MenuProps } from "antd";
+import {
+  changeTheme,
+  useGetCurrentMode,
+} from "../../../redux/features/theme/themeSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user: Record<string, any> | null = useSelector(currentUser);
+  const mode = useAppSelector(useGetCurrentMode);
+
+  console.log(user);
 
   const handleLogout = () => {
     dispatch(logOut());
-    toast.success("Logged out successful");
-    navigate("/");
+    toast.success("User logged out successfully!");
+    return navigate("/login");
   };
 
-  console.log(user);
+  const handleChangeMode = () => {
+    dispatch(changeTheme(mode === "light" ? "dark" : "light"));
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      label: (
+        <div>
+          <Link
+            to={`/${user?.role}/profile`}
+            className="flex items-center gap-2 hover:text-accent"
+          >
+            <span>
+              <User size={14} />
+            </span>
+            Profile
+          </Link>
+        </div>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <div className="">
+          <Link to={"/"} className="hover:text-accent flex items-center gap-2">
+            <span>
+              <Home size={14} />
+            </span>
+            Home
+          </Link>
+        </div>
+      ),
+
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <div onClick={handleLogout} className="flex items-center gap-2">
+          <LogOut size={14} />
+          <button>Log Out</button>
+        </div>
+      ),
+
+      key: "3",
+    },
+  ];
   const navItems = [
     {
       label: "Home",
@@ -83,35 +147,37 @@ const Navbar = () => {
       <div className="navbar-end">
         {user && user?.email ? (
           <>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            <div className="flex items-center justify-end gap-3 mr-4 h-16">
+              <div className="text-accent">
+                <p
+                  onClick={handleChangeMode}
+                  className="border-2 border-accent cursor-pointer bg-accentColor rounded-full p-5 flex items-center justify-center relative"
+                >
+                  <Moon
+                    className={`text-accent ${
+                      mode === "dark" ? "opacity-0" : "opacity-100"
+                    } absolute left-0 top-[9px] w-full duration-300`}
+                    size={22}
                   />
-                </div>
+                  <SunMoon
+                    className={`text-accent ${
+                      mode === "dark" ? "opacity-100" : "opacity-0"
+                    } absolute left-0 top-[9px] w-full duration-300`}
+                    size={22}
+                  />
+                </p>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              <Dropdown
+                placement="bottomRight"
+                menu={{ items }}
+                trigger={["click"]}
               >
-                <li>
-                  <NavLink to={"/"} className="justify-between">
-                    Profile
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={`${user.role}/profile`}>Dashboard</NavLink>
-                </li>
-                <li onClick={handleLogout}>
-                  <button className="text-red-500 font-bold">Logout</button>
-                </li>
-              </ul>
+                <a className="rounded-full" onClick={(e) => e.preventDefault()}>
+                  <p className="border-2 border-accent cursor-pointer  rounded-full p-2">
+                    <CircleUserRound className="text-accent" size={22} />
+                  </p>
+                </a>
+              </Dropdown>
             </div>
           </>
         ) : (

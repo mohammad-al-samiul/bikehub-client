@@ -8,7 +8,6 @@ import { useAppDispatch } from "../../redux/hook";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Helmet } from "react-helmet";
 
 export type TUser = {
   email: string;
