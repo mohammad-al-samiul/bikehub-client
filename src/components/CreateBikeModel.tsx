@@ -29,6 +29,7 @@ const CreateBikeModal = ({ isModalOpen, setIsModalOpen }: TModalProps) => {
       year: Number(data.year),
       pricePerHour: Number(data.pricePerHour),
     };
+    console.log("bikeData", bikeData);
     handleMutation(bikeData, createBike, "Bike is being created...", onSuccess);
   };
 

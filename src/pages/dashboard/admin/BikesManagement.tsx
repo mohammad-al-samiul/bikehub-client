@@ -1,148 +1,152 @@
-import { Popconfirm, Table, TableProps, Tooltip } from "antd";
-import UpdateBikeModal from "../../../components/UpdateBikeModel";
-import { useState } from "react";
-import { TQueryParams } from "../../../types/global.type";
 import {
-  useDeleteBikeMutation,
-  useGetBikesQuery,
-} from "../../../redux/features/bike/bikeApi";
-import handleMutation from "../../../utils/handleMutation";
-import { TBike } from "../../../types/bike.type";
+  Button,
+  Space,
+  Table,
+  TableColumnsType,
+  TableProps,
+  Tooltip,
+} from "antd";
+import React, { useState } from "react";
+import { useGetBikesQuery } from "../../../redux/features/bike/bikeApi";
+import Spinner from "../../../components/ui/spinner/Spinner";
 import { Edit, Trash } from "lucide-react";
-import DashboardTitle from "../../../components/ui/DashboardTitle";
-import BSmallButton from "../../../components/form/BSmallButton";
-import CreateBikeModal from "../../../components/CreateBikeModel";
 
-const BikesManagement = () => {
-  const [bikeId, setBikeId] = useState("");
+type OnChange = NonNullable<TableProps<DataType>["onChange"]>;
+type Filters = Parameters<OnChange>[1];
 
-  // load bike data
-  const { data, isFetching } = useGetBikesQuery(undefined);
+type GetSingle<T> = T extends (infer U)[] ? U : never;
+type Sorts = GetSingle<Parameters<OnChange>[2]>;
 
-  const bikeData = data?.data;
+type DataType = {
+  key: string;
+  _id: string;
+  name: string;
+  brand: string;
+  model: string;
+  pricePerHour: number;
+  isAvailable: boolean;
+  status?: string;
+  year: number;
+};
 
-  // manage create bike modal
-  const [isCreateBikeModalOpen, setIsCreateBikeModalOpen] = useState(false);
-  const showCreateBikeModal = () => {
-    setIsCreateBikeModalOpen(true);
-  };
+const BikesManagement: React.FC = () => {
+  const [filteredInfo, setFilteredInfo] = useState<Filters>({});
+  const [sortedInfo, setSortedInfo] = useState<Sorts>({});
 
-  // manage update bike modal
-  const [isUpdateBikeModalOpen, setIsUpdateBikeModalOpen] = useState(false);
-  const showUpdateBikeModal = (bikeId: string) => {
-    setBikeId(bikeId);
-    setIsUpdateBikeModalOpen(true);
-  };
+  const { data: BikesData, isLoading } = useGetBikesQuery([]);
+  if (isLoading) {
+    return <Spinner />;
+  }
+  const bikes = BikesData?.data;
+  console.log("bikes", bikes);
 
-  // manage delete bike
-  const [deleteBike] = useDeleteBikeMutation();
-  const handleDeleteBike = (id: string) => {
-    handleMutation(id, deleteBike, "Bike is being deleted...");
-  };
-
-  const tableData = bikeData?.map(
-    ({ name, isAvailable, brand, pricePerHour, _id, model }: TBike) => ({
-      key: _id,
-      name,
-      brand,
-      model,
-      isAvailable,
-      pricePerHour,
-    })
-  );
-
-  const brandFilterItems = bikeData?.map((item: TBike) => ({
-    text: item.brand,
-    value: item.brand,
-  }));
-  const modelFilterItems = bikeData?.map((item: TBike) => ({
-    text: item.model,
-    value: item.model,
+  const data: DataType[] = bikes?.map((bike: DataType) => ({
+    key: bike?._id,
+    name: bike?.name,
+    brand: bike?.brand,
+    model: bike?.model,
+    status: bike?.isAvailable ? "Available" : "Not Available",
+    year: bike?.year,
+    pricePerHour: bike?.pricePerHour,
   }));
 
-  const columns = [
+  const handleChange: OnChange = (pagination, filters, sorter) => {
+    console.log("Various parameters", pagination, filters, sorter);
+    setFilteredInfo(filters);
+    setSortedInfo(sorter as Sorts);
+  };
+
+  const clearFilters = () => {
+    setFilteredInfo({});
+  };
+
+  const clearAll = () => {
+    setFilteredInfo({});
+    setSortedInfo({});
+  };
+
+  const setPriceSort = () => {
+    setSortedInfo({
+      order: "descend",
+      columnKey: "pricePerHour",
+    });
+  };
+
+  const columns: TableColumnsType<DataType> = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
-    },
-    {
-      title: "Availability",
-      render: ({ isAvailable }: { isAvailable: boolean }) => (
-        <p>{isAvailable ? "Available" : "Unavailable"}</p>
-      ),
-      key: "isAvailable",
+      ellipsis: true,
     },
     {
       title: "Brand",
       dataIndex: "brand",
       key: "brand",
-      filters: brandFilterItems,
-      filterSearch: true,
+      filters: Array.from(new Set(data?.map((bike) => bike?.brand))).map(
+        (brand) => ({
+          text: brand,
+          value: brand,
+        })
+      ),
+      filteredValue: filteredInfo.brand || null,
+      onFilter: (value, record) => record.brand.includes(value as string),
+      sorter: (a, b) => a.brand.length - b.brand.length,
+      sortOrder: sortedInfo.columnKey === "brand" ? sortedInfo.order : null,
+      ellipsis: true,
     },
     {
-      title: "Model",
-      dataIndex: "model",
-      key: "model",
-      filters: modelFilterItems,
-      filterSearch: true,
-    },
-    {
-      title: "Price(Hourly)",
+      title: "Price Per Hour",
       dataIndex: "pricePerHour",
       key: "pricePerHour",
+      sorter: (a, b) => a.pricePerHour - b.pricePerHour,
+      sortOrder:
+        sortedInfo.columnKey === "pricePerHour" ? sortedInfo.order : null,
+      ellipsis: true,
     },
     {
-      title: "Actions",
-      render: ({ key }: { key: string }) => (
-        <div className="flex items-center gap-3">
-          <Tooltip title="Update bike">
-            <Edit
-              onClick={() => showUpdateBikeModal(key)}
-              size={20}
-              className="cursor-pointer text-accentColor"
-            />
-          </Tooltip>
-          <Popconfirm
-            placement="bottom"
-            title="Delete the bike"
-            description="Are you sure to delete this bike?"
-            onConfirm={() => handleDeleteBike(key)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Tooltip title="Delete bike">
-              <Trash size={20} className="cursor-pointer text-red-500" />
+      title: "Year",
+      dataIndex: "year",
+      key: "year",
+      ellipsis: true,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      sorter: (a, b) => a.status?.length! - b.status?.length!,
+      sortOrder: sortedInfo.columnKey === "status" ? sortedInfo.order : null,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <a>
+            <Tooltip title="Edit">
+              <Edit className=" text-yellow-500" />
             </Tooltip>
-          </Popconfirm>
-        </div>
+          </a>
+          <a>
+            <Tooltip title="Delete">
+              <Trash className="text-red-500" />
+            </Tooltip>
+          </a>
+        </Space>
       ),
-      key: "acsdf",
     },
   ];
-
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <DashboardTitle heading="All Bikes" align="left" />
-        <div>
-          <BSmallButton onClick={showCreateBikeModal}>Create Bike</BSmallButton>
-        </div>
-      </div>
-      <Table
-        loading={isFetching}
-        dataSource={tableData}
+      <Space style={{ marginBottom: 16 }}>
+        <Button onClick={setPriceSort}>Sort Price</Button>
+        <Button onClick={clearFilters}>Clear filters</Button>
+        <Button onClick={clearAll}>Clear filters and sorters</Button>
+      </Space>
+      <Table<DataType>
         columns={columns}
-        scroll={{ x: 800 }}
-      />
-      <CreateBikeModal
-        isModalOpen={isCreateBikeModalOpen}
-        setIsModalOpen={setIsCreateBikeModalOpen}
-      />
-      <UpdateBikeModal
-        bikeId={bikeId}
-        isModalOpen={isUpdateBikeModalOpen}
-        setIsModalOpen={setIsUpdateBikeModalOpen}
+        dataSource={data}
+        onChange={handleChange}
       />
     </div>
   );
