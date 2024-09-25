@@ -14,10 +14,11 @@ const BInput = ({ type, name, label }: TInputProps) => {
   const errorMessage = errors[name]?.message as string | undefined;
 
   return (
-    <div style={{ marginBottom: "15px" }}>
+    <div className="w-full" style={{ marginBottom: "15px" }}>
       {label && <label htmlFor={name}>{label}</label>}
       <Controller
         name={name}
+        defaultValue=""
         rules={{
           required: `${label} is required`,
         }}
@@ -26,7 +27,7 @@ const BInput = ({ type, name, label }: TInputProps) => {
             {...field}
             type={type}
             id={name}
-            className="input input-bordered input-accent w-full max-w-xs"
+            className="input input-bordered input-accent w-full"
           />
         )}
       />

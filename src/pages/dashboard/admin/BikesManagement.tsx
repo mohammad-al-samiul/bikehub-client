@@ -10,6 +10,9 @@ import React, { useState } from "react";
 import { useGetBikesQuery } from "../../../redux/features/bike/bikeApi";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { Edit, Trash } from "lucide-react";
+import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
+import CreateBikeModal from "./CreateBikeModal";
+import UpdateBikeModal from "./UpdateBikeModal";
 
 type OnChange = NonNullable<TableProps<DataType>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
@@ -32,16 +35,20 @@ type DataType = {
 const BikesManagement: React.FC = () => {
   const [filteredInfo, setFilteredInfo] = useState<Filters>({});
   const [sortedInfo, setSortedInfo] = useState<Sorts>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedBikeId, setSelectedBikeId] = useState<string | null>();
 
   const { data: BikesData, isLoading } = useGetBikesQuery([]);
   if (isLoading) {
     return <Spinner />;
   }
   const bikes = BikesData?.data;
-  console.log("bikes", bikes);
+  //console.log("bikes", bikes);
 
   const data: DataType[] = bikes?.map((bike: DataType) => ({
     key: bike?._id,
+    _id: bike?._id,
     name: bike?.name,
     brand: bike?.brand,
     model: bike?.model,
@@ -70,6 +77,31 @@ const BikesManagement: React.FC = () => {
       order: "descend",
       columnKey: "pricePerHour",
     });
+  };
+
+  const createShowModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const updateShowModal = (bikeId: string) => {
+    setSelectedBikeId(bikeId);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleUpdateOk = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const handleUpdateCancel = () => {
+    setIsUpdateModalOpen(false);
   };
 
   const columns: TableColumnsType<DataType> = [
@@ -124,7 +156,10 @@ const BikesManagement: React.FC = () => {
         <Space size="middle">
           <a>
             <Tooltip title="Edit">
-              <Edit className=" text-yellow-500" />
+              <Edit
+                onClick={() => updateShowModal(record?._id)!}
+                className="text-yellow-500"
+              />
             </Tooltip>
           </a>
           <a>
@@ -136,18 +171,38 @@ const BikesManagement: React.FC = () => {
       ),
     },
   ];
+
   return (
     <div>
-      <Space style={{ marginBottom: 16 }}>
-        <Button onClick={setPriceSort}>Sort Price</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
-      </Space>
-      <Table<DataType>
-        columns={columns}
-        dataSource={data}
-        onChange={handleChange}
-      />
+      <div className="flex justify-between items-center">
+        <DashboardSectionTitle heading="All Bikes" align="left" />
+        <div>
+          <Button onClick={createShowModal}>Create Bike</Button>
+          <CreateBikeModal
+            handleCancel={handleCancel}
+            handleOk={handleOk}
+            isModalOpen={isModalOpen}
+          />
+        </div>
+      </div>
+      <>
+        <Space style={{ marginBottom: 16 }}>
+          <Button onClick={setPriceSort}>Sort Price</Button>
+          <Button onClick={clearFilters}>Clear filters</Button>
+          <Button onClick={clearAll}>Clear filters and sorters</Button>
+        </Space>
+        <Table<DataType>
+          columns={columns}
+          dataSource={data}
+          onChange={handleChange}
+        />
+        <UpdateBikeModal
+          bikeId={selectedBikeId!}
+          handleCancel={handleUpdateCancel}
+          handleOk={handleUpdateOk}
+          isModalOpen={isUpdateModalOpen}
+        />
+      </>
     </div>
   );
 };

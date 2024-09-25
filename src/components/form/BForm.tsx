@@ -13,12 +13,16 @@ type TFormProps = {
 };
 
 const BForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
-  const methods = useForm({ defaultValues });
+  // Pass the defaultValues to useForm
+  const methods = useForm({
+    defaultValues, // Set the default values here
+  });
 
   const submit: SubmitHandler<FieldValues> = (data) => {
     onSubmit(data);
-    methods.reset();
+    methods.reset(); // Reset form after submission
   };
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(submit)}>{children}</form>

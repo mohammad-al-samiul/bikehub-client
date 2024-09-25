@@ -4,10 +4,10 @@ const bikeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createBike: builder.mutation({
       invalidatesTags: ["bike"],
-      query: (data) => ({
+      query: (bikeInfo) => ({
         url: "/bikes",
         method: "POST",
-        body: data,
+        body: bikeInfo,
       }),
     }),
     getBikes: builder.query({
@@ -29,10 +29,10 @@ const bikeApi = baseApi.injectEndpoints({
       }),
     }),
     updateBike: builder.mutation({
-      query: ({ bikeData, bikeId }) => ({
+      query: ({ formData, bikeId }) => ({
         url: `/bikes/${bikeId}`,
         method: "PUT",
-        body: bikeData,
+        body: formData,
       }),
     }),
   }),
