@@ -11,24 +11,28 @@ const bikeApi = baseApi.injectEndpoints({
       }),
     }),
     getBikes: builder.query({
+      providesTags: ["bike"],
       query: () => ({
         url: "/bikes",
         method: "GET",
       }),
     }),
     getSingleBike: builder.query({
+      providesTags: ["bike"],
       query: (id) => ({
         url: `bikes/${id}`,
         method: "GET",
       }),
     }),
     deleteBike: builder.mutation({
+      invalidatesTags: ["bike"],
       query: (bikeId) => ({
         url: `/bikes/${bikeId}`,
         method: "DELETE",
       }),
     }),
     updateBike: builder.mutation({
+      invalidatesTags: ["bike"],
       query: ({ formData, bikeId }) => ({
         url: `/bikes/${bikeId}`,
         method: "PUT",

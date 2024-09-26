@@ -36,12 +36,13 @@ const CreateBikeModal: React.FC<TCreateBikeModalProps> = ({
     formData.append("file", data.image); // Assuming image is an array
     formData.append("data", JSON.stringify(bikeInfo)); // Append the JSON string
 
-    console.log("bikeInfo", formData);
+    // console.log("bikeInfo", formData);
 
     const toastId = toast.loading("Creating bike!");
     const res = await createBike(formData).unwrap(); // Send FormData directly
-    console.log("response", res);
+    //console.log("response", res);
     if (res.success) {
+      handleOk();
       toast.success("Create bike successfully!", {
         id: toastId,
         duration: 2000,

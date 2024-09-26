@@ -1,13 +1,19 @@
 import {
   Button,
+  message,
+  Popconfirm,
   Space,
   Table,
   TableColumnsType,
   TableProps,
   Tooltip,
 } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
-import { useGetBikesQuery } from "../../../redux/features/bike/bikeApi";
+import {
+  useDeleteBikeMutation,
+  useGetBikesQuery,
+} from "../../../redux/features/bike/bikeApi";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { Edit, Trash } from "lucide-react";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
@@ -40,11 +46,26 @@ const BikesManagement: React.FC = () => {
   const [selectedBikeId, setSelectedBikeId] = useState<string | null>();
 
   const { data: BikesData, isLoading } = useGetBikesQuery([]);
+
+  const [deleteBike] = useDeleteBikeMutation();
+
   if (isLoading) {
     return <Spinner />;
   }
+
   const bikes = BikesData?.data;
-  //console.log("bikes", bikes);
+
+  const handleDelete = async (bikeId: string) => {
+    try {
+      const res = await deleteBike(bikeId).unwrap();
+      console.log(res);
+      if (res.success) {
+        message.success("Bike deleted successfully!");
+      }
+    } catch (error) {
+      message.error("An error occurred while deleting the bike.");
+    }
+  };
 
   const data: DataType[] = bikes?.map((bike: DataType) => ({
     key: bike?._id,
@@ -56,53 +77,6 @@ const BikesManagement: React.FC = () => {
     year: bike?.year,
     pricePerHour: bike?.pricePerHour,
   }));
-
-  const handleChange: OnChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as Sorts);
-  };
-
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-
-  const setPriceSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "pricePerHour",
-    });
-  };
-
-  const createShowModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const updateShowModal = (bikeId: string) => {
-    setSelectedBikeId(bikeId);
-    setIsUpdateModalOpen(true);
-  };
-
-  const handleUpdateOk = () => {
-    setIsUpdateModalOpen(false);
-  };
-
-  const handleUpdateCancel = () => {
-    setIsUpdateModalOpen(false);
-  };
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -154,23 +128,79 @@ const BikesManagement: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>
+          <>
             <Tooltip title="Edit">
               <Edit
-                onClick={() => updateShowModal(record?._id)!}
+                onClick={() => updateShowModal(record?._id)}
                 className="text-yellow-500"
               />
             </Tooltip>
-          </a>
-          <a>
+          </>
+          <>
             <Tooltip title="Delete">
-              <Trash className="text-red-500" />
+              <Popconfirm
+                title="Delete the Bike"
+                description="Are you sure to delete this bike?"
+                icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                onConfirm={() => handleDelete(record?._id)} // Deleting bike
+                okText="Yes"
+                cancelText="No"
+              >
+                <Trash className="text-red-500" />
+              </Popconfirm>
             </Tooltip>
-          </a>
+          </>
         </Space>
       ),
     },
   ];
+
+  const handleChange: OnChange = (pagination, filters, sorter) => {
+    // console.log("Various parameters", pagination, filters, sorter);
+    setFilteredInfo(filters);
+    setSortedInfo(sorter as Sorts);
+  };
+
+  const clearFilters = () => {
+    setFilteredInfo({});
+  };
+
+  const clearAll = () => {
+    setFilteredInfo({});
+    setSortedInfo({});
+  };
+
+  const setPriceSort = () => {
+    setSortedInfo({
+      order: "descend",
+      columnKey: "pricePerHour",
+    });
+  };
+
+  const createShowModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const updateShowModal = (bikeId: string) => {
+    setSelectedBikeId(bikeId);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleUpdateOk = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const handleUpdateCancel = () => {
+    setIsUpdateModalOpen(false);
+  };
 
   return (
     <div>

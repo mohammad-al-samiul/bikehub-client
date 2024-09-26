@@ -23,14 +23,15 @@ const UpdateBikeModal: React.FC<TUpdateBikeModalProps> = ({
   handleOk,
   handleCancel,
 }) => {
-  // console.log("b", bikeId);
   const [updateBike] = useUpdateBikeMutation();
-  const { data, isLoading } = useGetSingleBikeQuery(bikeId);
-  if (isLoading) {
-    return;
+  const { data, isFetching, isLoading } = useGetSingleBikeQuery(bikeId);
+
+  if (isFetching || isLoading) {
+    return null; // Return null or a loader while fetching the data
   }
+
   const bike = data?.data;
-  //console.log("bikeData", data);
+
   const defaultValues = {
     name: bike?.name,
     description: bike?.description,
@@ -41,36 +42,43 @@ const UpdateBikeModal: React.FC<TUpdateBikeModalProps> = ({
     model: bike?.model,
     brand: bike?.brand,
   };
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+
+  const onSubmit: SubmitHandler<FieldValues> = async (formData) => {
     const bikeInfo = {
-      name: data?.name,
-      description: data?.description,
-      pricePerHour: parseInt(data?.pricePerHour),
+      name: formData?.name,
+      description: formData?.description,
+      pricePerHour: parseInt(formData?.pricePerHour),
       isAvailable: true,
-      cc: parseInt(data?.cc),
-      year: parseInt(data?.year),
-      model: data?.model,
-      brand: data?.brand,
+      cc: parseInt(formData?.cc),
+      year: parseInt(formData?.year),
+      model: formData?.model,
+      brand: formData?.brand,
     };
 
-    console.log("bikeInfo", bikeInfo);
+    const updateFormData = new FormData();
+    updateFormData.append("file", formData.image); // Assuming image is an array
+    updateFormData.append("data", JSON.stringify(bikeInfo));
 
-    const formData = new FormData();
-    formData.append("file", data.image); // Assuming image is an array
-    formData.append("data", JSON.stringify(bikeInfo)); // Append the JSON string
+    const toastId = toast.loading("Updating bike...");
 
-    const toastId = toast.loading("Updating bike!");
-    const res = await updateBike({ formData, bikeId }).unwrap(); // Send FormData directly
-    console.log("response", res);
-    if (res.success) {
-      toast.success("Update bike successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
+    try {
+      const response = await updateBike({
+        formData: updateFormData,
+        bikeId,
+      }).unwrap();
+      if (response.success) {
+        toast.success("Bike updated successfully!", { id: toastId });
+        handleOk(); // Close the modal after successful update
+      } else {
+        throw new Error("Update failed");
+      }
+    } catch (error) {
+      toast.error("Failed to update bike", { id: toastId });
     }
   };
+
   return (
-    <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer="">
+    <Modal open={isModalOpen} onCancel={handleCancel} footer="">
       <h1 className="text-xl font-bold text-center">Update Bike</h1>
       <div className="w-full ">
         <BForm onSubmit={onSubmit} defaultValues={defaultValues}>
@@ -82,6 +90,7 @@ const UpdateBikeModal: React.FC<TUpdateBikeModalProps> = ({
           <BInput type="number" name="year" label="Year" />
           <BInput type="text" name="description" label="Description" />
           <BFileInput name="image" label="Bike Image" />
+
           <BSubmit value="Update Bike" />
         </BForm>
       </div>
