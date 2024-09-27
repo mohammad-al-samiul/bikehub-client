@@ -1,12 +1,11 @@
-import { Helmet } from "react-helmet";
 import { useGetMyProfileQuery } from "../../../redux/features/auth/authApi";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { Divider } from "antd";
 import profileImage from "../../../assets/images/avator.png";
 import bannerBike from "../../../assets/images/bikes/bookingBanner.jpg";
 const Profile = () => {
-  const { data, isFetching } = useGetMyProfileQuery(undefined);
-  if (isFetching) {
+  const { data, isFetching, isLoading } = useGetMyProfileQuery(undefined);
+  if (isFetching || isLoading) {
     return <Spinner />;
   }
 

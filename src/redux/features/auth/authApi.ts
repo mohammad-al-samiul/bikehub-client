@@ -21,38 +21,37 @@ const authApi = baseApi.injectEndpoints({
         url: "/users/me",
         method: "GET",
       }),
-      providesTags: ["user"],
     }),
 
     updateMyProfile: builder.mutation({
-      query: (data) => ({
+      invalidatesTags: ["user"],
+      query: (updateData) => ({
         url: "/users/me",
         method: "PUT",
-        body: data,
+        body: updateData,
       }),
-      invalidatesTags: ["user"],
     }),
 
     getAllUsers: builder.query({
+      providesTags: ["user"],
       query: () => ({
-        url: "/users",
+        url: "/auth/users",
         method: "GET",
       }),
-      providesTags: ["user"],
     }),
     deleteUser: builder.mutation({
+      invalidatesTags: ["user"],
       query: (userId) => ({
         url: `/users/${userId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["user"],
     }),
     updateUserRole: builder.mutation({
+      invalidatesTags: ["user"],
       query: (userId) => ({
         url: `/users/${userId}`,
         method: "PUT",
       }),
-      invalidatesTags: ["user"],
     }),
   }),
 });

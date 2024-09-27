@@ -1,5 +1,6 @@
 import {
   Button,
+  ConfigProvider,
   message,
   Popconfirm,
   Space,
@@ -128,16 +129,16 @@ const BikesManagement: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <>
-            <Tooltip title="Edit">
+          <a>
+            <Tooltip title="Edit Bike">
               <Edit
                 onClick={() => updateShowModal(record?._id)}
                 className="text-yellow-500"
               />
             </Tooltip>
-          </>
-          <>
-            <Tooltip title="Delete">
+          </a>
+          <a>
+            <Tooltip title="Delete Bike">
               <Popconfirm
                 title="Delete the Bike"
                 description="Are you sure to delete this bike?"
@@ -149,7 +150,7 @@ const BikesManagement: React.FC = () => {
                 <Trash className="text-red-500" />
               </Popconfirm>
             </Tooltip>
-          </>
+          </a>
         </Space>
       ),
     },
@@ -202,12 +203,20 @@ const BikesManagement: React.FC = () => {
     setIsUpdateModalOpen(false);
   };
 
+  const customTheme = {
+    token: {
+      colorPrimary: "#2BE6A7", // Change this to your primary color
+    },
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <DashboardSectionTitle heading="All Bikes" align="left" />
         <div>
-          <Button onClick={createShowModal}>Create Bike</Button>
+          <ConfigProvider theme={customTheme}>
+            <Button onClick={createShowModal}>Create Bike</Button>
+          </ConfigProvider>
           <CreateBikeModal
             handleCancel={handleCancel}
             handleOk={handleOk}

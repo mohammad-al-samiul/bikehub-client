@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "booking/:id",
         element: (
-          <ProtectedRoutes role="user | admin">
+          <ProtectedRoutes role="admin">
             <Booking />
           </ProtectedRoutes>
         ),

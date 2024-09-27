@@ -3,8 +3,8 @@ import MangageUser from "../pages/dashboard/admin/ManageUser";
 
 import Users from "../pages/dashboard/admin/Users";
 import Profile from "../pages/dashboard/user/Profile";
-import Rentals from "../pages/dashboard/user/Rentals";
-import Coupons from "../pages/dashboard/admin/Coupons";
+
+import ReturnBike from "../pages/dashboard/admin/ReturnBike";
 
 export const adminPaths = [
   {
@@ -21,24 +21,14 @@ export const adminPaths = [
     name: "User Management",
     children: [
       {
-        name: "Manage User",
-        path: "manage-user",
-        element: <MangageUser />,
-      },
-      {
-        name: "Rentals",
-        path: "rentals",
-        element: <Rentals />,
+        name: "Return Bike",
+        path: "return-bike",
+        element: <ReturnBike />,
       },
       {
         name: "All Users",
         path: "users",
         element: <Users />,
-      },
-      {
-        name: "Coupons",
-        path: "coupons",
-        element: <Coupons />,
       },
     ],
   },
