@@ -1,11 +1,28 @@
 import { Link, useParams } from "react-router-dom";
 import { useGetSingleBikeQuery } from "../../redux/features/bike/bikeApi";
 import { TBikeProps } from "./Bikes";
+import { Button } from "antd";
+import { useState } from "react";
+import BookingModal from "../booking/BookingModal";
 
 const BikeDesc = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { id } = useParams();
   const { data } = useGetSingleBikeQuery(id);
   const bike: TBikeProps = data?.data;
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="hero flex justify-start  w-full shadow-xl rounded-lg ">
@@ -32,11 +49,22 @@ const BikeDesc = () => {
           </p>
 
           {bike?.isAvailable ? (
-            <Link to={`/booking/${bike?._id}`}>
-              <button className="btn btn-accent text-white">Book Now</button>
-            </Link>
+            <>
+              <button
+                className="btn btn-sm text-white bg-accent hover:bg-accent hover:text-white border-none"
+                onClick={showModal}
+              >
+                Book Now
+              </button>
+              <BookingModal
+                bikeId={bike?._id}
+                isModalOpen={isModalOpen}
+                handleOk={handleOk}
+                handleCancel={handleCancel}
+              />
+            </>
           ) : (
-            <button className="btn btn-accent text-white btn-disabled" disabled>
+            <button className="btn btn-sm" disabled>
               Book Now
             </button>
           )}

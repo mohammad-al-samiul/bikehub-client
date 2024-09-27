@@ -1,6 +1,6 @@
-import Bike from "../pages/dashboard/user/Bike";
+import BikeTable from "../pages/dashboard/user/BikeTable";
 import Profile from "../pages/dashboard/user/Profile";
-import Rentals from "../pages/dashboard/user/Rentals";
+import MyRentals from "../pages/dashboard/user/MyRentals";
 
 export const userPaths = [
   {
@@ -11,11 +11,11 @@ export const userPaths = [
   {
     name: "Bikes",
     path: "bikes",
-    element: <Bike />,
+    element: <BikeTable />,
   },
   {
     name: "My Rentals",
     path: "my-rentals",
-    element: <Rentals />,
+    element: <MyRentals />,
   },
 ];

@@ -3,6 +3,7 @@ import { baseApi } from "../../api/baseApi";
 const rentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     rentBike: builder.mutation({
+      invalidatesTags: ["rental", "bike"],
       query: (rentInfo) => ({
         url: "/rentals",
         method: "POST",
@@ -12,13 +13,15 @@ const rentApi = baseApi.injectEndpoints({
 
     returnBike: builder.mutation({
       invalidatesTags: ["rental"],
-      query: ({ rentalId }) => ({
+      query: ({ rentalEndTime, rentalId }) => ({
         url: `/rentals/${rentalId}/return`,
         method: "PUT",
+        body: rentalEndTime,
       }),
     }),
 
     getRentAllBike: builder.query({
+      providesTags: ["rental"],
       query: () => ({
         url: `/rentals`,
         method: "GET",

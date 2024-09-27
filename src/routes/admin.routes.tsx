@@ -1,10 +1,9 @@
 import BikesManagement from "../pages/dashboard/admin/BikesManagement";
-import MangageUser from "../pages/dashboard/admin/ManageUser";
 
 import Users from "../pages/dashboard/admin/Users";
 import Profile from "../pages/dashboard/user/Profile";
 
-import ReturnBike from "../pages/dashboard/admin/ReturnBike";
+import ReturnBikeList from "../pages/dashboard/admin/ReturnBike";
 
 export const adminPaths = [
   {
@@ -23,7 +22,7 @@ export const adminPaths = [
       {
         name: "Return Bike",
         path: "return-bike",
-        element: <ReturnBike />,
+        element: <ReturnBikeList />,
       },
       {
         name: "All Users",

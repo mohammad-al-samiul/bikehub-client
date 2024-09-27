@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: "booking/:id",
         element: (
-          <ProtectedRoutes role="admin">
+          <ProtectedRoutes role={["admin", "user"]}>
             <Booking />
           </ProtectedRoutes>
         ),
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedRoutes role="admin">
+      <ProtectedRoutes role={["admin"]}>
         <DashboardLayout />
       </ProtectedRoutes>
     ),
@@ -76,7 +76,7 @@ const router = createBrowserRouter([
   {
     path: "/user",
     element: (
-      <ProtectedRoutes role="user">
+      <ProtectedRoutes role={["user"]}>
         <DashboardLayout />
       </ProtectedRoutes>
     ),
