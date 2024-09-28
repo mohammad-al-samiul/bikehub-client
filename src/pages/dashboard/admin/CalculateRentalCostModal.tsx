@@ -6,6 +6,7 @@ import BForm from "../../../components/form/BForm";
 import BTimePicker from "../../../components/form/BTimePicker";
 
 import BSmallButton from "../../../components/form/BSmallButton";
+import { toast } from "sonner";
 
 // const schema = z.object({
 //   endTime: z.unknown().refine((value) => value, {
@@ -36,12 +37,13 @@ const CalculateRentalCostModal = ({
       endTime: time,
     };
     const res = await returnBike({ rentalEndTime, rentalId }).unwrap();
-    console.log("res", res);
+    // console.log("res", res);
 
     if (res.success) {
       setIsModalOpen(false);
       setReset(true);
-      message.success("Bike Return Successfully!");
+
+      toast.success("Bike Return Successfully!");
     }
   };
 

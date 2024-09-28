@@ -9,5 +9,6 @@ export type TRental = {
   startTime: string;
   totalCost: number;
   userId: TUser;
+  paymentStatus: string;
   _id: string;
 };

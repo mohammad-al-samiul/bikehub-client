@@ -15,6 +15,7 @@ import {
 } from "../../../redux/features/auth/authApi";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { Trash, User, UserCog } from "lucide-react";
+import { toast } from "sonner";
 
 interface DataType {
   _id: string;
@@ -43,17 +44,17 @@ const Users = () => {
   const handleDelete = async (bikeId: string) => {
     const res = await deleteUser(bikeId).unwrap();
     if (res.success) {
-      message.success("Bike deleted successfully!");
+      toast.success("Bike deleted successfully!");
     }
   };
   const handleUpdate = async (bikeId: string) => {
     const res = await updateUserRole(bikeId).unwrap();
     console.log(res);
     if (res?.success) {
-      message.success("User Role Update successfully!");
+      toast.success("User Role Update successfully!");
     }
 
-    message.success("Bike update successfully!");
+    toast.success("Bike update successfully!");
   };
 
   const data: DataType[] = users?.map((user: DataType) => ({

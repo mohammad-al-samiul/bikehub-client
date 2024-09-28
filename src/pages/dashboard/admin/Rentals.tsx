@@ -12,17 +12,17 @@ export type TTableProps = {
   _id: string;
   bikeId: TBike;
   userId: TUser;
+  userEmail: string;
   name: string;
+  returnTime: string;
   totalCost: string;
+  paymentStatus: string;
 };
 
 const Rentals = () => {
   const [rentalId, setRentalId] = useState("");
   const [isCalculationModalOpen, setIsCalculationModalOpen] = useState(false);
-  const { data, isFetching, isLoading } = useGetRentAllBikeQuery([
-    { name: "isPaid", value: false },
-    { name: "totalCost", value: 0 },
-  ]);
+  const { data, isFetching, isLoading } = useGetRentAllBikeQuery([]);
 
   if (isLoading) {
     return <Spinner />;
@@ -34,6 +34,7 @@ const Rentals = () => {
     startTime: bike.startTime,
     key: bike?._id,
     name: bike?.name,
+    userEmail: bike?.userEmail,
     pricePerHour: bike?.totalCost,
   }));
 

@@ -20,6 +20,7 @@ import { Edit, Trash } from "lucide-react";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import CreateBikeModal from "./CreateBikeModal";
 import UpdateBikeModal from "./UpdateBikeModal";
+import { toast } from "sonner";
 
 type OnChange = NonNullable<TableProps<DataType>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
@@ -61,7 +62,7 @@ const BikesManagement: React.FC = () => {
       const res = await deleteBike(bikeId).unwrap();
       console.log(res);
       if (res.success) {
-        message.success("Bike deleted successfully!");
+        toast.success("Bike deleted successfully!");
       }
     } catch (error) {
       message.error("An error occurred while deleting the bike.");

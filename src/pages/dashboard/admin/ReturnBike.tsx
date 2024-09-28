@@ -1,10 +1,12 @@
 // src/components/ReturnBikeList.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Space, TableColumnsType, Button, ConfigProvider } from "antd";
 
 import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
 import CalculateRentalCostModal from "./CalculateRentalCostModal";
 import Spinner from "../../../components/ui/spinner/Spinner";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../redux/features/auth/authSlice";
 
 type DataType = {
   key: string;
@@ -20,8 +22,14 @@ type DataType = {
 const ReturnBikeList: React.FC = () => {
   const [rentalId, setRentalId] = useState("");
   const [isCalculationModalOpen, setIsCalculationModalOpen] = useState(false);
+  const user = useSelector(currentUser);
+  const { data: rentalData, isLoading, refetch } = useGetRentAllBikeQuery([]);
 
-  const { data: rentalData, isLoading } = useGetRentAllBikeQuery([]);
+  useEffect(() => {
+    if (user) {
+      refetch();
+    }
+  }, [user, refetch]);
 
   if (isLoading) {
     return <Spinner />;
