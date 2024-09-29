@@ -3,13 +3,20 @@ import Spinner from "../../../components/ui/spinner/Spinner";
 import { Divider } from "antd";
 import profileImage from "../../../assets/images/avator.png";
 import bannerBike from "../../../assets/images/bikes/bookingBanner.jpg";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../../redux/features/auth/authSlice";
+import { useEffect } from "react";
 const Profile = () => {
-  const { data, isFetching, isLoading } = useGetMyProfileQuery(undefined);
-  if (isFetching || isLoading) {
-    return <Spinner />;
-  }
+  const { data, isLoading, refetch } = useGetMyProfileQuery(undefined);
+  const user = useSelector(currentUser);
 
-  if (!data?.success || !data?.data) {
+  useEffect(() => {
+    if (user) {
+      refetch();
+    }
+  }, [user]);
+
+  if (isLoading) {
     return <Spinner />;
   }
 

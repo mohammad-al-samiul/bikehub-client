@@ -1,14 +1,17 @@
 import { Button, Table } from "antd";
+import { useMemo } from "react";
 import { TBike } from "../../../types/bike.type";
 
-import { useGetMyProfileQuery } from "../../../redux/features/auth/authApi";
-import { TUser } from "../../../types/user.type";
+import { useCreatePaymentMutation } from "../../../redux/features/payment/paymentApi";
 
 export type TTableProps = {
   startTime: string;
   returnTime: string;
+  bikeName: string;
   totalCost: number;
   _id: string;
+  paymentStatus: string;
+  userEmail: string;
   bikeId: TBike;
 };
 
@@ -19,85 +22,80 @@ const UnpaidRentals = ({
   options: TTableProps[];
   loading: boolean;
 }) => {
-  const { data } = useGetMyProfileQuery(undefined);
-  const usreData = data?.data as TUser;
-  console.log("userData", usreData);
-  const handlePayment = (totalCost: number, name: string, id: string) => {
+  const [createPayment] = useCreatePaymentMutation();
+
+  const handlePayment = async (item: TTableProps) => {
     const paymentInfo = {
-      total_amount: totalCost,
-      currency: "BDT",
-      product_name: name,
-      product_category: "bike",
-      cus_name: usreData?.name,
-      cus_email: usreData?.email,
-      cus_add1: usreData?.address,
-      cus_postcode: usreData?.address,
-      cus_country: "Bangladesh",
-      cus_phone: usreData?.phone,
+      clientEmail: item?.userEmail,
+      bikeName: item?.bikeName,
+      bikeId: item?.bikeId,
+      totalCost: item?.totalCost,
+      startTime: item?.startTime,
+      returnTime: item?.returnTime,
     };
+
+    // console.log("paymentInfo", paymentInfo);
+
+    try {
+      const res = await createPayment(paymentInfo).unwrap();
+      console.log("res", res);
+      //   window.location.href = res?.payment_url;
+      window.open(res?.payment_url, "_blank");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const columns = [
-    {
-      title: "Bike Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Client Email",
-      dataIndex: "userEmail",
-      key: "userEmail",
-    },
-    {
-      title: "Start Time",
-      dataIndex: "startTime",
-      key: "startTime",
-    },
-    {
-      title: "Return Time",
-      render: ({ returnTime }: { returnTime: string }) => (
-        <p>{returnTime === null ? "Not returned yet" : returnTime}</p>
-      ),
-      key: "returnTime",
-    },
-    {
-      title: "Total Cost",
-      render: ({ totalCost }: { totalCost: number }) => (
-        <p>{totalCost === 0 ? "Not calculated yet" : totalCost}</p>
-      ),
-      key: "totalCost",
-    },
-    {
-      title: "Payment",
-      render: ({
-        totalCost,
-        name,
-        key,
-      }: {
-        totalCost: number;
-        name: string;
-        key: string;
-      }) => (
-        // <RButtonSmall onClick={() => handlePayment(totalCost, name, key)}>
-        //   Pay Now
-        // </RButtonSmall>
-        <Button onClick={() => handlePayment(totalCost, name, key)}>
-          Pay Now
-        </Button>
-      ),
-      key: "address",
-    },
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        title: "Bike Name",
+        dataIndex: "bikeName",
+        key: "bikeName",
+      },
+      {
+        title: "Client Email",
+        dataIndex: "userEmail",
+        key: "userEmail",
+      },
+      {
+        title: "Start Time",
+        dataIndex: "startTime",
+        key: "startTime",
+      },
+      {
+        title: "Return Time",
+        render: ({ returnTime }: { returnTime: string }) => (
+          <p>{returnTime || "Not returned yet"}</p>
+        ),
+        key: "returnTime",
+      },
+      {
+        title: "Total Cost",
+        render: ({ totalCost }: { totalCost: number }) => (
+          <p>{totalCost > 0 ? totalCost : "Not calculated yet"}</p>
+        ),
+        key: "totalCost",
+      },
+      {
+        title: "Payment",
+        render: ({ ...unpaidItem }: TTableProps) => (
+          <Button onClick={() => handlePayment(unpaidItem)}>Pay Now</Button>
+        ),
+        key: "payment",
+      },
+    ],
+    []
+  );
 
   return (
-    <div>
-      <Table
-        loading={loading}
-        dataSource={options}
-        columns={columns}
-        scroll={{ x: 800 }}
-      />
-    </div>
+    <Table
+      loading={loading}
+      dataSource={options}
+      columns={columns}
+      scroll={{ x: 800 }}
+      rowKey="_id"
+    />
   );
 };
 

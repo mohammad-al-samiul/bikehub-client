@@ -10,9 +10,14 @@ const PaidRentals = ({
 }) => {
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Bike Name",
+      dataIndex: "bikeName",
+      key: "bikeName",
+    },
+    {
+      title: "Client Email",
+      dataIndex: "userEmail",
+      key: "userEmail",
     },
     {
       title: "Start Time",
@@ -21,8 +26,8 @@ const PaidRentals = ({
     },
     {
       title: "Return Time",
-      dataIndex: "endTime",
-      key: "endTime",
+      dataIndex: "returnTime",
+      key: "returnTime",
     },
     {
       title: "Total Cost",

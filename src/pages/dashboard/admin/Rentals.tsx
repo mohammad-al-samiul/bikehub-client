@@ -10,6 +10,7 @@ import Spinner from "../../../components/ui/spinner/Spinner";
 export type TTableProps = {
   startTime: string;
   _id: string;
+  bikeName: string;
   bikeId: TBike;
   userId: TUser;
   userEmail: string;

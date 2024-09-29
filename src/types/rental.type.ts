@@ -3,6 +3,7 @@ import { TUser } from "./user.type";
 
 export type TRental = {
   bikeId: TBike;
+  userEmail: string;
   isPaid: boolean;
   isReturned: boolean;
   returnTime: string;

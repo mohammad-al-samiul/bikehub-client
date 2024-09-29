@@ -6,11 +6,24 @@ import { useEffect } from "react";
 import { TRental } from "../../../types/rental.type";
 import { Tabs, TabsProps } from "antd";
 
-import { TTableProps } from "../admin/Rentals";
-
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import UnpaidRentals from "./UnpaidRentals";
 import PaidRentals from "./PaidRentals";
+import { TBike } from "../../../types/bike.type";
+import { TUser } from "../../../types/user.type";
+
+export type TTableProps = {
+  startTime: string;
+  _id: string;
+  bikeName: string;
+  bikeId: TBike;
+  userId: TUser;
+  userEmail: string;
+  name: string;
+  returnTime: string;
+  totalCost: string;
+  paymentStatus: string;
+};
 
 const MyRentals = () => {
   const user = useSelector(currentUser);
@@ -21,11 +34,16 @@ const MyRentals = () => {
       refetch();
     }
   }, [user, refetch]);
-  if (isLoading) {
-    return <Spinner />;
-  }
-  console.log("rentData", data?.data);
 
+  // useEffect(() => {
+  //   if (data?.data.paymentStatus) {
+  //     refetch();
+  //   }
+  // }, [data?.data]);
+
+  useEffect(() => {
+    refetch();
+  }, [data?.data]);
   const paidData = data?.data?.filter(
     (item: TRental) => item?.paymentStatus === "Paid"
   );
@@ -44,7 +62,8 @@ const MyRentals = () => {
       paymentStatus,
     }: TTableProps) => ({
       key: _id,
-      name: bikeId.name,
+      bikeName: bikeId.name,
+      bikeId: bikeId._id,
       userEmail,
       startTime,
       returnTime,
@@ -63,14 +82,19 @@ const MyRentals = () => {
       userEmail,
     }: TTableProps) => ({
       key: _id,
-      name: bikeId.name,
+      bikeName: bikeId.name,
       userEmail,
+      bikeId: bikeId._id,
+      _id: _id,
       startTime,
       returnTime,
       totalCost,
     })
   );
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   // tab props
   const items: TabsProps["items"] = [
     {

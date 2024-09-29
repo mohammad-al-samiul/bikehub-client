@@ -1,7 +1,6 @@
 // src/components/ReturnBikeList.tsx
 import React, { useEffect, useState } from "react";
-import { Table, Space, TableColumnsType, Button, ConfigProvider } from "antd";
-
+import { Table, Space, TableColumnsType, Button } from "antd";
 import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
 import CalculateRentalCostModal from "./CalculateRentalCostModal";
 import Spinner from "../../../components/ui/spinner/Spinner";
@@ -10,8 +9,11 @@ import { currentUser } from "../../../redux/features/auth/authSlice";
 
 type DataType = {
   key: string;
-  _id: string;
-  bikeId: string;
+  _id?: string;
+  bikeId: {
+    _id: string;
+    name: string;
+  };
   userEmail: string;
   startTime: string;
   isReturned: boolean;
@@ -39,25 +41,19 @@ const ReturnBikeList: React.FC = () => {
   //console.log("rentals", rentals);
 
   const data: DataType[] = rentals?.map((rental: DataType) => ({
-    key: rental?._id,
+    key: rental?.bikeId?._id,
     _id: rental?._id,
-    bikeId: rental?.bikeId,
+    bikeId: rental?.bikeId?._id,
     userEmail: rental?.userEmail,
     startTime: rental?.startTime,
     isReturned: rental?.isReturned || null,
-    totalCost: rental?.totalCost || null,
-    returnTime: rental?.returnTime,
+    totalCost: rental?.totalCost ? rental?.totalCost : "Not yet calculate",
+    returnTime: rental?.returnTime ? rental.returnTime : "Not yet Return",
   }));
 
   const showCalculationModal = (id: string) => {
     setRentalId(id);
     setIsCalculationModalOpen(true);
-  };
-
-  const customTheme = {
-    token: {
-      colorPrimary: "#0d9488", // Change this to your primary color
-    },
   };
 
   const columns: TableColumnsType<DataType> = [
@@ -101,11 +97,9 @@ const ReturnBikeList: React.FC = () => {
           {record?.isReturned ? (
             <button>Returned</button>
           ) : (
-            <ConfigProvider theme={customTheme}>
-              <Button onClick={() => showCalculationModal(record?._id)}>
-                Return Bike
-              </Button>
-            </ConfigProvider>
+            <Button onClick={() => showCalculationModal(record?._id as string)}>
+              Return Bike
+            </Button>
           )}
         </Space>
       ),
