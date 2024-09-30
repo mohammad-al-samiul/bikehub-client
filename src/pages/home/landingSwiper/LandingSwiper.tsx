@@ -44,13 +44,12 @@ const LandingSwiper = () => {
   ];
 
   return (
-    <Box height={"80vh"}>
+    <Box height={"100vh"}>
       <Swiper
         autoplay={{
           delay: 7000,
           disableOnInteraction: false,
         }}
-        // direction={"vertical"} // Enable vertical direction
         slidesPerView={1}
         spaceBetween={30}
         modules={[Autoplay, Pagination, Scrollbar]} // Include required modules

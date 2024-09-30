@@ -1,10 +1,12 @@
+import HowToRent from "./howToRent/HowToRent";
 import LandingSwiper from "./landingSwiper/LandingSwiper";
 
 const HomePage = () => {
   return (
-    <div>
+    <>
       <LandingSwiper />
-    </div>
+      <HowToRent />
+    </>
   );
 };
 

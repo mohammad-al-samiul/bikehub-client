@@ -40,13 +40,13 @@ const Footer = () => {
       <nav>
         <div className="grid grid-flow-col gap-4 text-3xl">
           <a target="_blank" href="https://www.facebook.com/alsamiul1996">
-            <FaFacebook className="text-4xl" />
+            <FaFacebook className="text-4xl hover:text-teal-500 focus:text-teal-500 transform hover:scale-110 transition-transform duration-300" />
           </a>
           <a target="_blank" href="https://github.com/mohammad-al-samiul">
-            <FaGithub className="text-4xl" />
+            <FaGithub className="text-4xl hover:text-teal-500 focus:text-teal-500 transform hover:scale-110 transition-transform duration-300" />
           </a>
           <a target="_blank" href="https://www.linkedin.com/in/al-samiul/">
-            <FaLinkedin className="text-4xl" />
+            <FaLinkedin className="text-4xl hover:text-teal-500 focus:text-teal-500 transform hover:scale-110 transition-transform duration-300" />
           </a>
         </div>
       </nav>
