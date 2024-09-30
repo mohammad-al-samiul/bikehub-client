@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TQueryParams } from "../../../types/global.type";
+
 import { useGetBikesQuery } from "../../../redux/features/bike/bikeApi";
 
 import {
@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "antd";
 
-import { Edit, Eye, FileText, Info, Trash } from "lucide-react";
+import { Eye } from "lucide-react";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { Link } from "react-router-dom";
@@ -38,14 +38,13 @@ type DataType = {
 const BikeTable = () => {
   const [filteredInfo, setFilteredInfo] = useState<Filters>({});
   const [sortedInfo, setSortedInfo] = useState<Sorts>({});
-  const [params, setParams] = useState<TQueryParams[] | []>([]);
-  const { data: bikeData, isFetching } = useGetBikesQuery([]);
+  const { data: bikeData, isLoading } = useGetBikesQuery([]);
 
-  if (isFetching) {
+  if (isLoading) {
     return <Spinner />;
   }
+
   const bikes = bikeData?.data;
-  console.log("bikeData", bikeData);
 
   const data: DataType[] = bikes?.map((bike: DataType) => ({
     key: bike?._id,

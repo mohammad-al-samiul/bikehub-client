@@ -38,7 +38,6 @@ const UnpaidRentals = ({
 
     try {
       const res = await createPayment(paymentInfo).unwrap();
-      console.log("res", res);
       //   window.location.href = res?.payment_url;
       window.open(res?.payment_url, "_blank");
     } catch (error) {

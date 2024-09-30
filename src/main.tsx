@@ -9,13 +9,17 @@ import { PersistGate } from "redux-persist/integration/react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { Toaster } from "sonner";
+import "swiper/css";
+import { ChakraProvider } from "@chakra-ui/react";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <Toaster position="top-center" />
       <PersistGate loading={null} persistor={persistor}></PersistGate>
-      <RouterProvider router={router} />
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
     </Provider>
   </StrictMode>
 );

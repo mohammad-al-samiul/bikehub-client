@@ -35,15 +35,6 @@ const MyRentals = () => {
     }
   }, [user, refetch]);
 
-  // useEffect(() => {
-  //   if (data?.data.paymentStatus) {
-  //     refetch();
-  //   }
-  // }, [data?.data]);
-
-  useEffect(() => {
-    refetch();
-  }, [data?.data]);
   const paidData = data?.data?.filter(
     (item: TRental) => item?.paymentStatus === "Paid"
   );

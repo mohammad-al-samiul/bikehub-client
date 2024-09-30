@@ -1,7 +1,9 @@
+import LandingSwiper from "./landingSwiper/LandingSwiper";
+
 const HomePage = () => {
   return (
     <div>
-      <h1>This is home page</h1>
+      <LandingSwiper />
     </div>
   );
 };
