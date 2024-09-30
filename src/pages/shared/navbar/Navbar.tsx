@@ -27,8 +27,6 @@ const Navbar = () => {
   const user: Record<string, any> | null = useSelector(currentUser);
   const mode = useAppSelector(useGetCurrentMode);
 
-  console.log(user);
-
   const handleLogout = () => {
     dispatch(logOut());
     toast.success("User logged out successfully!");

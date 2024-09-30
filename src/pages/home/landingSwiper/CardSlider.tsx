@@ -28,7 +28,7 @@ const CardSlider = ({
       bgSize={"cover"}
       bgPosition={"center"}
       width={"full"}
-      height={"full"}
+      height={"80vh"}
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
@@ -51,7 +51,7 @@ const CardSlider = ({
         ></Box> */}
       <motion.p
         className="text-teal-500 sm:text-lg text-sm font-bold  px-2 z-10 mb-4"
-        style={{ textShadow: '2px 2px 2px rgba(0, 0, 0, 0.4)' }}
+        style={{ textShadow: "2px 2px 2px rgba(0, 0, 0, 0.4)" }}
         variants={{
           hidden: { opacity: 0, y: 75 },
           visible: { opacity: 1, y: 0 },
