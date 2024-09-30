@@ -10,6 +10,7 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { ChakraProvider } from "@chakra-ui/react";
+import { Toaster } from "sonner";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
       <ChakraProvider>
         <RouterProvider router={router} />
       </ChakraProvider>
+      <Toaster position="top-center" />
     </Provider>
   </StrictMode>
 );

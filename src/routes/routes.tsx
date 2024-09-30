@@ -16,6 +16,7 @@ import { routeGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import ProtectedRoutes from "../components/layouts/ProtectedRoutes";
 import { userPaths } from "./user.routes";
+import About from "../pages/about/About";
 
 const router = createBrowserRouter([
   {
@@ -24,10 +25,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "home",
         element: <HomePage />,
       },
       {
@@ -49,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <ContactPage />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
       {
         path: "login",

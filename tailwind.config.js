@@ -7,7 +7,7 @@ export default {
         bikehubtheme: {
           primary: "#2BE6A7",
 
-          secondary: "#0000ff",
+          secondary: "#0891b2",
 
           accent: "#0d9488",
 

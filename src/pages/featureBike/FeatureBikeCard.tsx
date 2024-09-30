@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { TBikeProps } from "./Bikes";
+import { TBikeProps } from "../bikes/Bikes";
 
-const BikeCard = ({ bike }: { bike: TBikeProps }) => {
+const FeatureBikeCard = ({ bike }: { bike: TBikeProps }) => {
   return (
-    <div className="card card-compact bg-base-100 lg:w-96 shadow-xl mx-5">
+    <div className="card card-compact bg-base-100 w-96 shadow-xl">
       <figure>
         <img src={bike.bikeImage} alt={bike.brand} />
       </figure>
@@ -23,7 +23,7 @@ const BikeCard = ({ bike }: { bike: TBikeProps }) => {
           </div>
         </div>
         <div className="card-actions justify-center">
-          <Link to={`${bike._id}`} className="btn btn-accent text-white">
+          <Link to={`bikes/${bike._id}`} className="btn btn-accent text-white">
             Buy Now
           </Link>
         </div>
@@ -32,4 +32,4 @@ const BikeCard = ({ bike }: { bike: TBikeProps }) => {
   );
 };
 
-export default BikeCard;
+export default FeatureBikeCard;

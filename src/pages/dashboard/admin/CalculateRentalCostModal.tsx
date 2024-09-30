@@ -1,7 +1,7 @@
 import { Dispatch, useState } from "react";
 import { useReturnBikeMutation } from "../../../redux/features/rent/rentApi";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { message, Modal } from "antd";
+import { Modal } from "antd";
 import BForm from "../../../components/form/BForm";
 import BTimePicker from "../../../components/form/BTimePicker";
 
@@ -42,7 +42,6 @@ const CalculateRentalCostModal = ({
     if (res.success) {
       setIsModalOpen(false);
       setReset(true);
-
       toast.success("Bike Return Successfully!");
     }
   };

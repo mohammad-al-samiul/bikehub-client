@@ -60,7 +60,7 @@ const BikesManagement: React.FC = () => {
   const handleDelete = async (bikeId: string) => {
     try {
       const res = await deleteBike(bikeId).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res.success) {
         toast.success("Bike deleted successfully!");
       }
@@ -206,7 +206,7 @@ const BikesManagement: React.FC = () => {
 
   const customTheme = {
     token: {
-      colorPrimary: "#2BE6A7", // Change this to your primary color
+      colorPrimary: "#0d9488", // Change this to your primary color
     },
   };
 

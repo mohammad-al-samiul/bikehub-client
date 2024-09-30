@@ -30,9 +30,7 @@ const MyRentals = () => {
   const { data, isLoading, refetch } = useGetRentAllBikeQuery([]);
 
   useEffect(() => {
-    if (user) {
-      refetch();
-    }
+    refetch();
   }, [user, refetch]);
 
   const paidData = data?.data?.filter(

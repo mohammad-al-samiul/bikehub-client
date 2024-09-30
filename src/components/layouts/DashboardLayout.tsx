@@ -87,32 +87,32 @@ const DashboardLayout: React.FC = () => {
   ];
 
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Sidebar toggleTheme="dark" />
+    <Layout style={{ height: "100" }}>
+      <Sidebar toggleTheme="light" />
       <Layout>
         <Header
-        // style={{
-        //   top: "0",
-        //   left: "0",
-        //   zIndex: 0,
-        //   padding: 0,
-        //   // background: colorBgContainer,
-        // }}
+          style={{
+            top: "0",
+            left: "0",
+            zIndex: 0,
+            padding: 0,
+            background: colorBgContainer,
+          }}
         >
           <div className="flex items-center justify-end gap-3 mr-4 h-16">
-            <div className="text-white">
+            <div className="text-teal-600">
               <p
                 onClick={handleChangeMode}
-                className="border-2 border-white cursor-pointer bg-accentColor rounded-full p-5 flex items-center justify-center relative"
+                className="border-2 border-teal-600 cursor-pointer rounded-full p-5 flex items-center justify-center relative"
               >
                 <Moon
-                  className={`text-white ${
+                  className={`text-teal-600 ${
                     mode === "dark" ? "opacity-0" : "opacity-100"
                   } absolute left-0 top-[9px] w-full duration-300`}
                   size={22}
                 />
                 <SunMoon
-                  className={`text-white ${
+                  className={`text-teal-600 ${
                     mode === "dark" ? "opacity-100" : "opacity-0"
                   } absolute left-0 top-[9px] w-full duration-300`}
                   size={22}
@@ -125,8 +125,8 @@ const DashboardLayout: React.FC = () => {
               trigger={["click"]}
             >
               <a className="rounded-full" onClick={(e) => e.preventDefault()}>
-                <p className="border-2 border-white cursor-pointer bg-accentColor rounded-full p-2">
-                  <CircleUserRound className="text-white" size={22} />
+                <p className="border-2 border-teal-600 cursor-pointer bg-accentColor rounded-full p-2">
+                  <CircleUserRound className="text-teal-600" size={22} />
                 </p>
               </a>
             </Dropdown>

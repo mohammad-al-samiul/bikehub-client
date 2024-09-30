@@ -41,7 +41,7 @@ const BookingModal = ({
     };
 
     const res = await rentBike(rentInfo).unwrap();
-    console.log(res);
+    //console.log(res);
     if (res.statusCode) {
       toast.success("Booking successfull");
       handleOk();

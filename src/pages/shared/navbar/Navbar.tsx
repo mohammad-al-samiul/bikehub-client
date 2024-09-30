@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logoImage from "../../../assets/images/logoModified.png";
+import logoImage from "../../../assets/images/logov2.png";
 import "./Navbar.css";
 
 import { useSelector } from "react-redux";
@@ -85,7 +85,7 @@ const Navbar = () => {
   const navItems = [
     {
       label: "Home",
-      path: "home",
+      path: "",
     },
     {
       label: "Bikes",
@@ -94,6 +94,10 @@ const Navbar = () => {
     {
       label: "Contact",
       path: "contact",
+    },
+    {
+      label: "About",
+      path: "about",
     },
   ];
 
@@ -180,11 +184,11 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <button className="btn btn-sm btn-neutral">
+            <button className="btn btn-sm btn-accent text-white mr-3">
               <Link to={"/login"}>Login</Link>
             </button>
-            <button className="btn btn-sm btn-secondary">
-              <Link to={"/signup"}>Sign up</Link>
+            <button className="btn btn-sm btn-secondary text-white mr-3">
+              <Link to="/signup">Sign up</Link>
             </button>
           </>
         )}

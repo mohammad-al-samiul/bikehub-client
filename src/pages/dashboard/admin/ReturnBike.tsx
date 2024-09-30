@@ -38,12 +38,12 @@ const ReturnBikeList: React.FC = () => {
   }
 
   const rentals = rentalData?.data;
-  //console.log("rentals", rentals);
+  // console.log("rentals", rentals);
 
   const data: DataType[] = rentals?.map((rental: DataType) => ({
     key: rental?.bikeId?._id,
     _id: rental?._id,
-    bikeId: rental?.bikeId?._id,
+    bikeId: rental?.bikeId?.name,
     userEmail: rental?.userEmail,
     startTime: rental?.startTime,
     isReturned: rental?.isReturned || null,
@@ -58,13 +58,13 @@ const ReturnBikeList: React.FC = () => {
 
   const columns: TableColumnsType<DataType> = [
     {
-      title: "Bike ID",
+      title: "Bike Name",
       dataIndex: "bikeId",
       key: "bikeId",
       ellipsis: true,
     },
     {
-      title: "User Email",
+      title: "Client Email",
       dataIndex: "userEmail",
       key: "userEmail",
       ellipsis: true,

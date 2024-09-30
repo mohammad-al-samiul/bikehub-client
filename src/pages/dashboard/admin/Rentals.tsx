@@ -30,7 +30,7 @@ const Rentals = () => {
   }
 
   const rentData = data?.data;
-  console.log(rentData);
+  //console.log(rentData);
   const rentalTableData = rentData.map((bike: TTableProps) => ({
     startTime: bike.startTime,
     key: bike?._id,

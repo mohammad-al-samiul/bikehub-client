@@ -1,11 +1,4 @@
-import {
-  message,
-  Popconfirm,
-  Space,
-  Table,
-  TableColumnsType,
-  Tooltip,
-} from "antd";
+import { Popconfirm, Space, Table, TableColumnsType, Tooltip } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 import {
@@ -44,17 +37,15 @@ const Users = () => {
   const handleDelete = async (bikeId: string) => {
     const res = await deleteUser(bikeId).unwrap();
     if (res.success) {
-      toast.success("Bike deleted successfully!");
+      toast.success("User Deleted Successfully!");
     }
   };
   const handleUpdate = async (bikeId: string) => {
     const res = await updateUserRole(bikeId).unwrap();
-    console.log(res);
+    //console.log(res);
     if (res?.success) {
       toast.success("User Role Update successfully!");
     }
-
-    toast.success("Bike update successfully!");
   };
 
   const data: DataType[] = users?.map((user: DataType) => ({
