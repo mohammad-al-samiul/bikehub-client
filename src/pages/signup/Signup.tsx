@@ -32,15 +32,23 @@ const Signup = () => {
       address: data?.address,
     };
 
-    const toastId = toast.loading("Signing up");
-    const res = await signup(userInfo).unwrap();
-    if (res.success) {
-      dispatch(logOut());
-      toast.success("Signed up successful", {
+    let toastId;
+    try {
+      toastId = toast.loading("Signing up");
+      const res = await signup(userInfo).unwrap();
+      if (res.success) {
+        dispatch(logOut());
+        toast.success("Signed up successful", {
+          id: toastId,
+          duration: 2000,
+        });
+        return navigate("/sign-up-success", { replace: true });
+      }
+    } catch (error) {
+      toast.error("Error during sign up, please try again.", {
         id: toastId,
         duration: 2000,
       });
-      return navigate("/sign-up-success", { replace: true });
     }
   };
 

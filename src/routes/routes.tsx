@@ -17,6 +17,7 @@ import { adminPaths } from "./admin.routes";
 import ProtectedRoutes from "../components/layouts/ProtectedRoutes";
 import { userPaths } from "./user.routes";
 import About from "../pages/about/About";
+import NotFoundPage from "../pages/error/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,12 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
+
   {
     path: "/admin",
     element: (

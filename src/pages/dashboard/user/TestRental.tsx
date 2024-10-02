@@ -1,35 +1,18 @@
-import Spinner from "../../../components/ui/spinner/Spinner";
-import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
-
-import { TRental } from "../../../types/rental.type";
-import { Tabs, TabsProps } from "antd";
+import { Button, Table, Tabs, TabsProps } from "antd";
+import { useGetMyProfileQuery } from "../../../redux/features/auth/authApi";
+import { TUser } from "../../../types/user.type";
+import { TTableProps } from "./MyRentals";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import UnpaidRentals from "./UnpaidRentals";
+import { TRental } from "../../../types/rental.type";
+import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
 import PaidRentals from "./PaidRentals";
-import { TBike } from "../../../types/bike.type";
-import { TUser } from "../../../types/user.type";
+import Spinner from "../../../components/ui/spinner/Spinner";
 
-export type TTableProps = {
-  startTime: string;
-  _id: string;
-  bikeName: string;
-  bikeId: TBike;
-  userId: TUser;
-  userEmail: string;
-  name: string;
-  returnTime: string;
-  totalCost: string;
-  paymentStatus: string;
-};
+const TestRentals = () => {
+  const { data, isLoading } = useGetRentAllBikeQuery([]);
 
-const MyRentals = () => {
-  // Fixed pollingInterval inside the options object
-  const { data, isLoading, isFetching } = useGetRentAllBikeQuery(undefined);
-
-  if (isLoading || isFetching) {
-    return <Spinner />;
-  }
-
+  console.log("rentData", data?.data);
   // Filtering paid and unpaid rental data
   const paidData = data?.data?.filter(
     (item: TRental) => item?.paymentStatus === "Paid"
@@ -80,7 +63,7 @@ const MyRentals = () => {
     })
   );
 
-  // Tab properties for paid and unpaid rentals
+  // tab props
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -96,6 +79,9 @@ const MyRentals = () => {
     },
   ];
 
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div>
       <DashboardSectionTitle heading="All you rented" />
@@ -104,4 +90,4 @@ const MyRentals = () => {
   );
 };
 
-export default MyRentals;
+export default TestRentals;

@@ -1,12 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetSingleBikeQuery } from "../../redux/features/bike/bikeApi";
 import { TBikeProps } from "./Bikes";
-import { Button } from "antd";
+
 import { useState } from "react";
 import BookingModal from "../booking/BookingModal";
 
+import { notification } from "antd";
+type NotificationType = "success" | "info" | "warning" | "error";
+
 const BikeDesc = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
 
   const { id } = useParams();
   const { data } = useGetSingleBikeQuery(id);
@@ -24,8 +28,14 @@ const BikeDesc = () => {
     setIsModalOpen(false);
   };
 
+  const openNotificationWithIcon = (type: NotificationType) => {
+    api[type]({
+      message: "Bike is not available",
+      description: "Try agian later or you can rent another bike!",
+    });
+  };
   return (
-    <div className="hero flex justify-start  w-full shadow-xl rounded-lg ">
+    <div className="hero flex justify-start  w-full shadow-lg rounded-lg ">
       <div className="hero-content flex-col lg:flex-row ">
         <img src={bike?.bikeImage} className="w-96 rounded-lg shadow-2xl" />
         <div>
@@ -64,9 +74,15 @@ const BikeDesc = () => {
               />
             </>
           ) : (
-            <button className="btn btn-sm" disabled>
-              Book Now
-            </button>
+            <>
+              {contextHolder}
+              <button
+                className="btn btn-sm text-white bg-accent hover:bg-accent hover:text-white border-none"
+                onClick={() => openNotificationWithIcon("error")}
+              >
+                Book Now
+              </button>
+            </>
           )}
         </div>
       </div>

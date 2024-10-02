@@ -9,7 +9,7 @@ import { RootState } from "../store";
 import { logOut, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://bikehub-server-ten.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -32,10 +32,13 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   // console.log("basequery", result);
 
   if (result.error && result.error.status === 401) {
-    const res = await fetch(`http://localhost:5000/api/auth/refresh-token`, {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `https://bikehub-server-ten.vercel.app/api/auth/refresh-token`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
 
     const refreshResult = await res.json();
     console.log("refresh result", refreshResult);
@@ -59,7 +62,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  tagTypes: ["user", "bike", "rental"],
+  tagTypes: ["user", "bike", "rental", "payment"],
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
 });

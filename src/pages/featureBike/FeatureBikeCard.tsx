@@ -3,7 +3,7 @@ import { TBikeProps } from "../bikes/Bikes";
 
 const FeatureBikeCard = ({ bike }: { bike: TBikeProps }) => {
   return (
-    <div className="card card-compact bg-base-100 w-96 shadow-xl">
+    <div className="card card-compact bg-base-100 lg:w-96 shadow-xl">
       <figure>
         <img src={bike.bikeImage} alt={bike.brand} />
       </figure>

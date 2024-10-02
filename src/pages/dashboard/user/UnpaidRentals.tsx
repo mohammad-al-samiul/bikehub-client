@@ -4,6 +4,9 @@ import { TBike } from "../../../types/bike.type";
 
 import { useCreatePaymentMutation } from "../../../redux/features/payment/paymentApi";
 
+import { notification } from "antd";
+type NotificationType = "success" | "info" | "warning" | "error";
+
 export type TTableProps = {
   startTime: string;
   returnTime: string;
@@ -22,6 +25,8 @@ const UnpaidRentals = ({
   options: TTableProps[];
   loading: boolean;
 }) => {
+  const [api, contextHolder] = notification.useNotification();
+
   const [createPayment] = useCreatePaymentMutation();
 
   const handlePayment = async (item: TTableProps) => {
@@ -38,11 +43,19 @@ const UnpaidRentals = ({
 
     try {
       const res = await createPayment(paymentInfo).unwrap();
-      //   window.location.href = res?.payment_url;
-      window.open(res?.payment_url, "_blank");
+      //console.log("res", res);
+      window.location.href = res?.payment_url;
+      //window.open(res?.payment_url, "_blank");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const openNotificationWithIcon = (type: NotificationType) => {
+    api[type]({
+      message: "You will not able to pay",
+      description: "After returning bike you will be able to pay",
+    });
   };
 
   const columns = useMemo(
@@ -78,9 +91,19 @@ const UnpaidRentals = ({
       },
       {
         title: "Payment",
-        render: ({ ...unpaidItem }: TTableProps) => (
-          <Button onClick={() => handlePayment(unpaidItem)}>Pay Now</Button>
-        ),
+        render: ({ ...unpaidItem }: TTableProps) =>
+          unpaidItem.returnTime && unpaidItem.totalCost ? (
+            <>
+              <Button onClick={() => handlePayment(unpaidItem)}>Pay Now</Button>
+            </>
+          ) : (
+            <>
+              {contextHolder}
+              <Button onClick={() => openNotificationWithIcon("error")}>
+                Pay Now
+              </Button>
+            </>
+          ),
         key: "payment",
       },
     ],

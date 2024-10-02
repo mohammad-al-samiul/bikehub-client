@@ -3,6 +3,7 @@ import { baseApi } from "../../api/baseApi";
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
+      invalidatesTags: ["user"],
       query: (userInfo) => ({
         url: "/auth/login",
         method: "POST",
@@ -10,6 +11,7 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
     signup: builder.mutation({
+      invalidatesTags: ["user"],
       query: (userInfo) => ({
         url: "/auth/signup",
         method: "POST",
@@ -17,6 +19,7 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
     getMyProfile: builder.query({
+      providesTags: ["user"],
       query: () => ({
         url: "/users/me",
         method: "GET",
