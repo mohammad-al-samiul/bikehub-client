@@ -2,9 +2,8 @@ import { Button, Table } from "antd";
 import { useMemo } from "react";
 import { TBike } from "../../../types/bike.type";
 
-import { useCreatePaymentMutation } from "../../../redux/features/payment/paymentApi";
-
 import { notification } from "antd";
+import { useCreatePaymentMutation } from "../../../redux/features/payment/paymentApi";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 export type TTableProps = {
@@ -25,9 +24,8 @@ const UnpaidRentals = ({
   options: TTableProps[];
   loading: boolean;
 }) => {
-  const [api, contextHolder] = notification.useNotification();
-
   const [createPayment] = useCreatePaymentMutation();
+  const [api, contextHolder] = notification.useNotification();
 
   const handlePayment = async (item: TTableProps) => {
     const paymentInfo = {
@@ -39,11 +37,9 @@ const UnpaidRentals = ({
       returnTime: item?.returnTime,
     };
 
-    // console.log("paymentInfo", paymentInfo);
-
     try {
       const res = await createPayment(paymentInfo).unwrap();
-      //console.log("res", res);
+      console.log("res", res);
       window.location.href = res?.payment_url;
       //window.open(res?.payment_url, "_blank");
     } catch (error) {
@@ -91,11 +87,9 @@ const UnpaidRentals = ({
       },
       {
         title: "Payment",
-        render: ({ ...unpaidItem }: TTableProps) =>
+        render: (unpaidItem: TTableProps) =>
           unpaidItem.returnTime && unpaidItem.totalCost ? (
-            <>
-              <Button onClick={() => handlePayment(unpaidItem)}>Pay Now</Button>
-            </>
+            <Button onClick={() => handlePayment(unpaidItem)}>Pay Now</Button>
           ) : (
             <>
               {contextHolder}

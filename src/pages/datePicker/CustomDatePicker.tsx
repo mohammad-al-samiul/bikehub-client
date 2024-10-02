@@ -21,8 +21,8 @@ const CustomDatePicker = () => {
     dates: [dayjs.Dayjs | null, dayjs.Dayjs | null] | null,
     dateStrings: [string, string]
   ) => {
-    //console.log("Selected Dates:", dates);
-    //console.log("Formatted Date Strings:", dateStrings);
+    console.log("Selected Dates:", dates);
+    console.log("Formatted Date Strings:", dateStrings);
   };
 
   return (

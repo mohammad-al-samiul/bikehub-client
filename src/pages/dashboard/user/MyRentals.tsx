@@ -8,6 +8,8 @@ import UnpaidRentals from "./UnpaidRentals";
 import PaidRentals from "./PaidRentals";
 import { TBike } from "../../../types/bike.type";
 import { TUser } from "../../../types/user.type";
+import { useGetPaymentByUserQuery } from "../../../redux/features/payment/paymentApi";
+import { useEffect } from "react";
 
 export type TTableProps = {
   startTime: string;
@@ -23,8 +25,15 @@ export type TTableProps = {
 };
 
 const MyRentals = () => {
-  // Fixed pollingInterval inside the options object
-  const { data, isLoading, isFetching } = useGetRentAllBikeQuery(undefined);
+  const { data, isLoading, isFetching, refetch } =
+    useGetRentAllBikeQuery(undefined);
+  const { data: paymentData } = useGetPaymentByUserQuery([]);
+
+  useEffect(() => {
+    refetch();
+  }, [paymentData?.data]);
+
+  console.log(paymentData);
 
   if (isLoading || isFetching) {
     return <Spinner />;

@@ -120,7 +120,7 @@ const BikeTable = () => {
   ];
 
   const handleChange: OnChange = (pagination, filters, sorter) => {
-    // console.log("Various parameters", pagination, filters, sorter);
+    console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter as Sorts);
   };

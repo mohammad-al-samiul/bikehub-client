@@ -1,18 +1,12 @@
-import { Dispatch, useState } from "react";
+import { Dispatch } from "react";
 import { useReturnBikeMutation } from "../../../redux/features/rent/rentApi";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Modal } from "antd";
 import BForm from "../../../components/form/BForm";
 import BTimePicker from "../../../components/form/BTimePicker";
 
 import BSmallButton from "../../../components/form/BSmallButton";
 import { toast } from "sonner";
-
-// const schema = z.object({
-//   endTime: z.unknown().refine((value) => value, {
-//     message: "End Time is required",
-//   }),
-// });
 
 type TModalProps = {
   isModalOpen: boolean;
@@ -25,7 +19,7 @@ const CalculateRentalCostModal = ({
   setIsModalOpen,
   rentalId,
 }: TModalProps) => {
-  const [reset, setReset] = useState(false);
+  const { reset } = useForm();
   const handleModalCancel = () => {
     setIsModalOpen(false);
   };
@@ -41,7 +35,7 @@ const CalculateRentalCostModal = ({
 
     if (res.success) {
       setIsModalOpen(false);
-      setReset(true);
+      reset();
       toast.success("Bike Return Successfully!");
     }
   };
