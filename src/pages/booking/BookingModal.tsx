@@ -32,12 +32,14 @@ const BookingModal = ({
   const [rentBike] = useRentBikeMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const time = data?.startTime?.toISOString();
+    const time = new Date(data.startTime).toISOString();
+    const formattedTime = time.slice(0, 19) + "Z";
+    // console.log("time", time);
 
     const rentInfo = {
       bikeId,
       userEmail: user?.email,
-      startTime: time,
+      startTime: formattedTime,
     };
 
     const res = await rentBike(rentInfo).unwrap();

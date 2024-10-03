@@ -24,10 +24,15 @@ const LoginPage = () => {
   let location = useLocation();
 
   const defaultValues = {
-    email: "alsamiul123@gmail.com",
-    password: "password123",
+    email: "",
+    password: "",
   };
 
+  /*
+    email: "alsamiul123@gmail.com",
+    password: "password123",
+
+  */
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userInfo = {
       email: data?.email,

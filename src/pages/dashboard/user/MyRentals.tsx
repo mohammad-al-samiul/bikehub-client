@@ -26,17 +26,23 @@ export type TTableProps = {
 
 const MyRentals = () => {
   const { data, isLoading, refetch } = useGetRentAllBikeQuery(undefined);
-  const { data: paymentData } = useGetPaymentByUserQuery([]);
+  const {
+    data: paymentData,
+    isFetching: paymentFetching,
+    isLoading: paymentLoading,
+  } = useGetPaymentByUserQuery([]);
 
   useEffect(() => {
-    refetch();
-  }, [paymentData?.data]);
+    if (paymentData?.data) {
+      refetch();
+    }
+  }, [paymentData?.data, refetch]);
 
-  if (isLoading) {
+  if (isLoading || paymentFetching || paymentLoading) {
     return <Spinner />;
   }
 
-  console.log(paymentData);
+  //console.log(paymentData);
 
   // Filtering paid and unpaid rental data
   const paidData = data?.data?.filter(

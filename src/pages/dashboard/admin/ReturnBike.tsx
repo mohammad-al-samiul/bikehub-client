@@ -73,7 +73,7 @@ const ReturnBikeList: React.FC = () => {
       title: "Start Time",
       dataIndex: "startTime",
       key: "startTime",
-      render: (time: string) => new Date(time).toLocaleString(),
+      render: (time: string) => time.toLocaleString(),
       ellipsis: true,
     },
     {
