@@ -25,7 +25,8 @@ export type TTableProps = {
 };
 
 const MyRentals = () => {
-  const { data, isLoading, refetch } = useGetRentAllBikeQuery(undefined);
+  const { data, isLoading, isFetching, refetch } =
+    useGetRentAllBikeQuery(undefined);
   const {
     data: paymentData,
     isFetching: paymentFetching,
@@ -38,7 +39,7 @@ const MyRentals = () => {
     }
   }, [paymentData?.data, refetch]);
 
-  if (isLoading || paymentFetching || paymentLoading) {
+  if (isLoading || paymentFetching || paymentLoading || isFetching) {
     return <Spinner />;
   }
 
