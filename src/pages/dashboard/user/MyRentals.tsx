@@ -1,124 +1,98 @@
+import { useEffect, useMemo } from "react";
+import { Tabs, TabsProps } from "antd";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
-
-import { TRental } from "../../../types/rental.type";
-import { Tabs, TabsProps } from "antd";
+import { useGetPaymentByUserQuery } from "../../../redux/features/payment/paymentApi";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import UnpaidRentals from "./UnpaidRentals";
 import PaidRentals from "./PaidRentals";
-import { TBike } from "../../../types/bike.type";
-import { TUser } from "../../../types/user.type";
-import { useGetPaymentByUserQuery } from "../../../redux/features/payment/paymentApi";
-import { useEffect } from "react";
 
 export type TTableProps = {
   startTime: string;
   _id: string;
   bikeName: string;
-  bikeId: TBike;
-  userId: TUser;
+  bikeId: { _id: string; name: string };
   userEmail: string;
-  name: string;
   returnTime: string;
   totalCost: string;
   paymentStatus: string;
 };
 
 const MyRentals = () => {
-  const { data, isLoading, isFetching, refetch } =
-    useGetRentAllBikeQuery(undefined);
-
+  // Fetch rental and payment data
+  const {
+    data: rentalData,
+    isLoading: isRentLoading,
+    isFetching,
+    refetch,
+  } = useGetRentAllBikeQuery(undefined);
   const { data: paymentData, refetch: refetchPaymentData } =
     useGetPaymentByUserQuery([]);
 
-  // Refetch when paymentDataState or data.data changes
+  // Effect to refetch rental data when payment data changes
   useEffect(() => {
-    refetch();
-  }, [paymentData?.data, refetch]);
+    if (paymentData) refetch();
+  }, [paymentData, refetch]);
 
-  if (isLoading || isFetching) {
-    return <Spinner />;
-  }
-
-  const paidData = data?.data?.filter(
-    (item: TRental) => item?.paymentStatus === "Paid"
-  );
-  const unPaidData = data?.data?.filter(
-    (item: TRental) => item?.paymentStatus === "Pending"
+  // Use memoization to filter and map rental data only when rentalData changes
+  const paidRentalItems = useMemo(
+    () =>
+      rentalData?.data
+        ?.filter((item: TTableProps) => item.paymentStatus === "Paid")
+        .map(mapRentalData),
+    [rentalData]
   );
 
-  // Mapping rental data for displaying in tabs
-  const paidRentalItems = paidData?.map(
-    ({
-      startTime,
-      returnTime,
-      totalCost,
-      _id,
-      bikeId,
-      userEmail,
-      paymentStatus,
-    }: TTableProps) => ({
-      key: _id,
-      bikeName: bikeId.name,
-      bikeId: bikeId._id,
-      userEmail,
-      startTime,
-      returnTime,
-      totalCost,
-      paymentStatus,
-    })
+  const unPaidRentalItems = useMemo(
+    () =>
+      rentalData?.data
+        ?.filter((item: TTableProps) => item.paymentStatus === "Pending")
+        .map(mapRentalData),
+    [rentalData]
   );
 
-  const unPaidRentalItems = unPaidData?.map(
-    ({
-      startTime,
-      returnTime,
-      totalCost,
-      _id,
-      bikeId,
-      userEmail,
-    }: TTableProps) => ({
-      key: _id,
-      bikeName: bikeId.name,
-      userEmail,
-      bikeId: bikeId._id,
-      _id: _id,
-      startTime,
-      returnTime,
-      totalCost,
-    })
+  // Define tab properties
+  const items: TabsProps["items"] = useMemo(
+    () => [
+      {
+        key: "1",
+        label: "Unpaid",
+        children: (
+          <UnpaidRentals loading={isFetching} options={unPaidRentalItems} />
+        ),
+      },
+      {
+        key: "2",
+        label: "Paid",
+        children: (
+          <PaidRentals loading={isFetching} options={paidRentalItems} />
+        ),
+      },
+    ],
+    [unPaidRentalItems, paidRentalItems, isFetching, refetchPaymentData]
   );
 
-  // Tab properties for paid and unpaid rentals
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Unpaid",
-      children: (
-        <UnpaidRentals loading={isLoading} options={unPaidRentalItems} />
-      ),
-    },
-    {
-      key: "2",
-      label: "Paid",
-      children: <PaidRentals loading={isLoading} options={paidRentalItems} />,
-    },
-  ];
-
-  const handleTabChange = (key: string) => {
-    if (key === "1") {
-      refetch();
-    } else if (key === "2") {
-      refetchPaymentData();
-    }
-  };
+  // If still loading initial data
+  if (isRentLoading) return <Spinner />;
 
   return (
     <div>
       <DashboardSectionTitle heading="All you rented" />
-      <Tabs defaultActiveKey="1" items={items} onChange={handleTabChange} />
+      <Tabs defaultActiveKey="1" items={items} />
     </div>
   );
 };
+
+// Helper function to map rental data
+const mapRentalData = (rental: TTableProps) => ({
+  key: rental._id,
+  bikeName: rental.bikeId.name,
+  bikeId: rental.bikeId._id,
+  userEmail: rental.userEmail,
+  startTime: rental.startTime,
+  returnTime: rental.returnTime,
+  totalCost: rental.totalCost,
+  paymentStatus: rental.paymentStatus,
+});
 
 export default MyRentals;

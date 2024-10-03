@@ -1,51 +1,57 @@
-# React + TypeScript + Vite
+# Bikehub Rental System 🏍️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview 📖
 
-Currently, two official plugins are available:
+The **Bikehub Rental System** is a user-friendly and responsive web application designed to streamline the process of renting bikes, managing bookings, and handling payments seamlessly. This project is built using modern web technologies to provide an excellent user experience with a focus on efficiency, security, and scalability.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Demo
 
-## Expanding the ESLint configuration
+You can view the live application at: [https://bikehub-client.netlify.app/](https://bikehub-client.netlify.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features ✨
 
-- Configure the top-level `parserOptions` property like this:
+- **User Authentication**: Secure sign-up, login, and profile management.
+- **Bike Management**: Browse, filter, and view detailed information about available bikes.
+- **Booking System**: Users can easily book bikes and make advance payments.
+- **Rental Management**: Users can view their rental history, pay outstanding fees, and return bikes.
+- **Admin Panel**: Admins can manage bikes, view user details, and monitor rental activity.
+- **Payment Integration**: Integrated with **AamarPay** for secure and seamless transactions.
+- **Theming**: Light/Dark mode toggling for an enhanced user experience.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Tech Stack 🛠️
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **React**: For building dynamic and responsive user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for fast and flexible UI design.
+- **Ant Design**: A popular React UI library for a wide range of robust components.
+- **Redux**: State management for centralizing application data.
+- **TypeScript**: Adds static typing to JavaScript, improving code quality and maintainability.
+- **AamarPay**: A secure payment gateway for processing transactions.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Installation & Setup 🛠️
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# bikehub-client
+Follow these steps to set up the project locally:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/mohammad-al-samiul/bikehub-client
+   ```
+
+````
+
+2. Navigate to the project directory:
+
+ ```bash
+ cd bikehub-client
+````
+
+3. Install the dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
