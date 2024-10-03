@@ -3,7 +3,7 @@ import { baseApi } from "../../api/baseApi";
 const paymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createPayment: builder.mutation({
-      invalidatesTags: ["rental", "payment"],
+      invalidatesTags: ["payment"],
       query: (paymentInfo) => ({
         url: "/create-payment",
         method: "POST",
@@ -11,7 +11,7 @@ const paymentApi = baseApi.injectEndpoints({
       }),
     }),
     getPaymentByUser: builder.query({
-      providesTags: ["rental", "payment"],
+      providesTags: ["payment"],
       query: () => ({
         url: "/get-payment",
         method: "GET",
