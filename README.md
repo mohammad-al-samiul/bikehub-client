@@ -32,18 +32,16 @@ You can view the live application at: [https://bikehub-client.netlify.app/](http
 Follow these steps to set up the project locally:
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/mohammad-al-samiul/bikehub-client
    ```
 
-````
-
 2. Navigate to the project directory:
 
-
- cd bikehub-client
-  ```
-  ```
+```bash
+cd bikehub-client
+```
 
 3. Install the dependencies:
 
@@ -56,4 +54,3 @@ Follow these steps to set up the project locally:
    ```bash
    npm run dev
    ```
-````
