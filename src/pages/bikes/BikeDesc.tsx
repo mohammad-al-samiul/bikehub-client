@@ -35,7 +35,7 @@ const BikeDesc = () => {
     });
   };
   return (
-    <div className="hero flex justify-start  w-full shadow-lg rounded-lg ">
+    <div className="hero flex justify-start  w-full shadow-lg rounded-lg h-[500px]">
       <div className="hero-content flex-col lg:flex-row ">
         <img src={bike?.bikeImage} className="w-96 rounded-lg shadow-2xl" />
         <div>
