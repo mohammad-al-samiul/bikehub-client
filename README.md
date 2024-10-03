@@ -40,9 +40,10 @@ Follow these steps to set up the project locally:
 
 2. Navigate to the project directory:
 
- ```bash
+
  cd bikehub-client
-````
+  ```
+  ```
 
 3. Install the dependencies:
 
@@ -55,3 +56,4 @@ Follow these steps to set up the project locally:
    ```bash
    npm run dev
    ```
+````
