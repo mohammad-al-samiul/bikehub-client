@@ -55,7 +55,7 @@ const CalculateRentalCostModal = ({
               name="endTime"
               placeholder="Select end time"
             />
-            <BSmallButton value="Pay" />
+            <BSmallButton value="Calculate Cost" />
           </BForm>
         </div>
       </Modal>

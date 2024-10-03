@@ -9,7 +9,7 @@ import PaidRentals from "./PaidRentals";
 import { TBike } from "../../../types/bike.type";
 import { TUser } from "../../../types/user.type";
 import { useGetPaymentByUserQuery } from "../../../redux/features/payment/paymentApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export type TTableProps = {
   startTime: string;
@@ -25,25 +25,28 @@ export type TTableProps = {
 };
 
 const MyRentals = () => {
-  const { data, isLoading, isFetching, refetch } =
-    useGetRentAllBikeQuery(undefined);
-  const {
-    data: paymentData,
-    isFetching: paymentFetching,
-    isLoading: paymentLoading,
-  } = useGetPaymentByUserQuery([]);
+  const { data, isLoading, refetch } = useGetRentAllBikeQuery(undefined);
+  const { data: paymentData, isLoading: paymentLoading } =
+    useGetPaymentByUserQuery([]);
+  const [paymentDataState, setPaymentDataState] = useState([]);
 
   useEffect(() => {
     if (paymentData?.data) {
-      refetch();
+      setPaymentDataState(paymentData.data);
     }
-  }, [paymentData?.data, refetch]);
+  }, [paymentDataState]);
 
-  if (isLoading || paymentFetching || paymentLoading || isFetching) {
+  // Refetch when paymentDataState or data.data changes
+  useEffect(() => {
+    refetch();
+  }, [paymentDataState, data?.data, refetch]);
+
+  if (isLoading || paymentLoading) {
     return <Spinner />;
   }
+  console.log("paymentState", paymentDataState);
 
-  //console.log(paymentData);
+  //console.log("rentData", data?.data);
 
   // Filtering paid and unpaid rental data
   const paidData = data?.data?.filter(
