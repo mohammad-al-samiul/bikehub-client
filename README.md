@@ -27,6 +27,18 @@ You can view the live application at: [https://bikehub-client.netlify.app/](http
 - **TypeScript**: Adds static typing to JavaScript, improving code quality and maintainability.
 - **AamarPay**: A secure payment gateway for processing transactions.
 
+## Login Credentials 🔑
+
+### Admin Login
+
+- **Email**: `alsamiul123@gmail.com`
+- **Password**: `password123`
+
+### User Login
+
+- **Email**: `jamal@gmail.com`
+- **Password**: `123456`
+
 ## Installation & Setup 🛠️
 
 Follow these steps to set up the project locally:
