@@ -11,15 +11,18 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { Toaster } from "sonner";
+import ThemeProvider from "./context/ThemeProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}></PersistGate>
-      <ChakraProvider>
-        <RouterProvider router={router} />
-      </ChakraProvider>
-      <Toaster position="top-center" />
-    </Provider>
+    <ThemeProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}></PersistGate>
+        <ChakraProvider>
+          <RouterProvider router={router} />
+        </ChakraProvider>
+        <Toaster position="top-center" />
+      </Provider>
+    </ThemeProvider>
   </StrictMode>
 );

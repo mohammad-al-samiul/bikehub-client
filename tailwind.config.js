@@ -24,6 +24,7 @@ export default {
           error: "#d30045",
         },
       },
+      "dark",
     ],
   },
   plugins: [require("daisyui")],

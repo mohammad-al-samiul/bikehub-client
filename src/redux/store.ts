@@ -12,19 +12,14 @@ import {
 import storage from "redux-persist/lib/storage";
 import authReducer from "./features/auth/authSlice";
 import { baseApi } from "./api/baseApi";
-import themeReducer from "./features/theme/themeSlice";
+
 import paymentReducer from "./features/payment/paymentSlice";
 
 const persistConfig = {
   key: "auth",
   storage,
 };
-const themePersistConfig = {
-  key: "theme",
-  storage,
-};
 
-const persistedThemeReducer = persistReducer(themePersistConfig, themeReducer);
 const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
@@ -32,7 +27,6 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedReducer,
     payment: paymentReducer,
-    theme: persistedThemeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
