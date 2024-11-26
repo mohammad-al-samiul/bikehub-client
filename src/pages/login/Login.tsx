@@ -6,15 +6,22 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { verifyToken } from "../../utils/verifyToken";
 import { useAppDispatch } from "../../redux/hook";
 import { setUser } from "../../redux/features/auth/authSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Image } from "@chakra-ui/react";
-import loginImage from "../../assets/images/loginImage.png";
 import logoImage from "../../assets/images/logo.png";
+import { HiArrowLeftCircle } from "react-icons/hi2";
+import { Button, Tooltip } from "antd";
+
 export type TUser = {
   email: string;
   password: string;
 };
+
+const customColor = "#108ee9";
+
+const userText = "email: jamal@gmail.com | password: 123456";
+const adminText = "email: alsamiul123@gmail.com | password: password123";
 
 const LoginPage = () => {
   const [login] = useLoginMutation();
@@ -68,27 +75,55 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <div className="min-h-[90%] flex justify-center items-center ">
-        <div className="max-w-screen-lg bg-gray-50 m-5 shadow-xl rounded-2xl flex justify-between items-center max-sm:flex-col">
-          <div className="w-1/2 max-sm:w-full flex flex-col py-4 items-center gap-5">
-            <Image src={logoImage} width={"25%"} />
-
-            <p className="text-sm font-normal text-gray-500">
-              Sign in to continue using Bikehub
-            </p>
-
-            <div className="w-full max-w-xs">
-              <BForm onSubmit={onSubmit} defaultValues={defaultValues}>
-                <BInput type="email" name="email" label="Email" />
-                <BInput type="password" name="password" label="Password" />
-                <BSubmit value="Login" />
-              </BForm>
+    <div className=" min-h-[90%] flex justify-center items-center">
+      <div className=" relative max-w-screen-lg bg-gray-50 m-5 shadow-xl rounded-2xl flex justify-between items-center max-sm:flex-col">
+        <div className="w-1/2 max-sm:w-full flex flex-col py-4 items-center gap-5">
+          <Link className="text-3xl" to={"/"}>
+            <div className="absolute top-5 left-5 text-5xl">
+              <HiArrowLeftCircle className="text-teal-500" />
             </div>
+          </Link>
+          <Image src={logoImage} width={"25%"} />
+          <p className="text-sm font-normal text-gray-700">
+            Sign in to continue using Bikehub
+          </p>
+          <p className="font-bold text-gray-700">Credential</p>
+          <div className="flex gap-2">
+            <Tooltip color={customColor} placement="bottom" title={userText}>
+              <Button className="text-teal-600 ">User Credentials</Button>
+            </Tooltip>
+            <Tooltip placement="bottom" color={customColor} title={adminText}>
+              <Button color={customColor} className="text-teal-600 ">
+                Admin Credentials
+              </Button>
+            </Tooltip>
           </div>
-          <div className="w-1/2 max-sm:w-5/6 h-[600px] max-sm:h-[400px] flex items-center self-end max-sm:self-center bg-gradient-to-t from-teal-200 to-teal-700 rounded-2xl m-4 ">
-            <img src={loginImage} alt="bike" className="w-full" />
+
+          <div className="w-full px-4 lg:px-10">
+            <BForm onSubmit={onSubmit} defaultValues={defaultValues}>
+              <BInput type="email" name="email" label="Email" />
+              <BInput type="password" name="password" label="Password" />
+              <BSubmit value="Login" />
+            </BForm>
           </div>
+          <div className="lg:my-6">
+            <p className="text-center">
+              Don't have an account?{" "}
+              <Link
+                className="font-bold text-teal-500 hover:text-accent duration-200"
+                to={"/signup"}
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
+        <div className="w-1/2 max-sm:w-5/6 h-[600px] max-sm:h-[400px] flex items-center self-end max-sm:self-center bg-gradient-to-t from-teal-200 to-teal-700 rounded-2xl m-4">
+          <img
+            src={`https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599550/dq721lpp7nszbdm7wxho.png`}
+            alt="bike"
+            className="w-full"
+          />
         </div>
       </div>
     </div>

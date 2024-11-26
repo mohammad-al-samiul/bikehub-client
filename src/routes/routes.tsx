@@ -52,19 +52,20 @@ const router = createBrowserRouter([
         path: "about",
         element: <About />,
       },
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "signup",
-        element: <Signup />,
-      },
+
       {
         path: "sign-up-success",
         element: <SignupSuccess />,
       },
     ],
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
   },
 
   {

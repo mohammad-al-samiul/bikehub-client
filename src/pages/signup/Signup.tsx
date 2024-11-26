@@ -11,7 +11,7 @@ import { logOut } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { Image } from "@chakra-ui/react";
 import logoImage from "../../assets/images/logo.png";
-import signupImage from "../../assets/images/signupImage.png";
+import { HiArrowLeftCircle } from "react-icons/hi2";
 
 export type TUser = {
   email: string;
@@ -53,17 +53,23 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <div className="min-h-[90%] flex justify-center items-center ">
-        <div className="max-w-screen-lg bg-gray-50 m-5 shadow-xl rounded-2xl flex justify-between items-center max-sm:flex-col">
-          <div className="w-1/2 max-sm:w-full flex flex-col py-4 items-center gap-5">
-            <Image src={logoImage} width={"25%"} />
+    <>
+      <div className="flex justify-center items-center ">
+        <div className="relative max-w-screen-lg bg-gray-50 m-5 shadow-xl rounded-2xl flex justify-between items-center max-sm:flex-col">
+          <div className=" w-1/2 max-sm:w-full flex flex-col py-4 items-center gap-5">
+            <Link className="text-3xl" to={"/"}>
+              <div className="absolute top-5 left-5 text-5xl">
+                <HiArrowLeftCircle className="text-teal-500" />
+              </div>
+            </Link>
 
-            <p className="text-sm font-normal text-gray-500">
+            <Image src={logoImage} width={100} />
+
+            <p className="text-sm font-normal text-gray-700">
               Sign up to continue using Bikehub
             </p>
 
-            <div className="w-full max-w-xs">
+            <div className="w-full lg:px-10 px-5">
               <BForm onSubmit={onSubmit}>
                 <BInput type="text" name="name" label="Name" />
                 <BInput type="email" name="email" label="Email" />
@@ -73,8 +79,8 @@ const Signup = () => {
                 <BSubmit value="Sign Up" />
               </BForm>
 
-              <div className="mt-6">
-                <p>
+              <div className="lg:my-6 mt-2">
+                <p className="text-center">
                   Already have an account?{" "}
                   <Link
                     className="font-bold text-teal-500 hover:text-accent duration-200"
@@ -87,11 +93,15 @@ const Signup = () => {
             </div>
           </div>
           <div className="w-1/2 max-sm:w-5/6 h-[600px] max-sm:h-[400px] flex items-center self-end max-sm:self-center bg-gradient-to-t from-teal-200 to-teal-700 rounded-2xl m-4 ">
-            <img src={signupImage} alt="bike" className="w-full" />
+            <img
+              src={`https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599735/ur7fbtfuaewzv2yuwwu4.png`}
+              alt="bike"
+              className="w-full"
+            />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
