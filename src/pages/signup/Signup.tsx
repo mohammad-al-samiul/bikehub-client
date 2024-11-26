@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { Image } from "@chakra-ui/react";
-import logoImage from "../../assets/images/logo.png";
 import { HiArrowLeftCircle } from "react-icons/hi2";
 
 export type TUser = {
@@ -63,7 +62,10 @@ const Signup = () => {
               </div>
             </Link>
 
-            <Image src={logoImage} width={100} />
+            <Image
+              src={`https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599548/ol8b6oxfmfscs0hi5fwe.png`}
+              width={100}
+            />
 
             <p className="text-sm font-normal text-gray-700">
               Sign up to continue using Bikehub

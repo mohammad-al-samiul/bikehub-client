@@ -1,8 +1,4 @@
 import CardSlider from "./CardSlider";
-import bannerImage1 from "../../../assets/images/landing/bannerBike.jpg";
-import bannerImage2 from "../../../assets/images/landing/banner5.jpg";
-import bannerImage3 from "../../../assets/images/landing/banner6.jpg";
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -18,7 +14,7 @@ import { Box } from "@chakra-ui/react";
 const LandingSwiper = () => {
   const data = [
     {
-      img: bannerImage1,
+      img: `https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599595/lfsfwqx7p95osdan4fem.jpg`,
       title: "Explore the City, One Ride at a Time",
       sousTitle: "Starting from 2$ per hour",
       text1: "Discover hidden gems and scenic routes ",
@@ -26,7 +22,7 @@ const LandingSwiper = () => {
       id: 1,
     },
     {
-      img: bannerImage2,
+      img: `https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599603/jskdiwpseutew0xjcnzk.jpg`,
       title: "Feel the Wind, Embrace the Ride",
       sousTitle: "Starting from 15$ per day",
       text1: "Experience the thrill of riding with our ",
@@ -34,7 +30,7 @@ const LandingSwiper = () => {
       id: 2,
     },
     {
-      img: bannerImage3,
+      img: `https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599617/slzrriobr6b10rejdk5f.jpg`,
       title: "Unlock the Joy of Riding",
       sousTitle: "Starting from 50$ per month",
       text1: "Elevate your mood and boost your energy",

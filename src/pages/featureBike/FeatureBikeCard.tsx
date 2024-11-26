@@ -3,7 +3,7 @@ import { TBikeProps } from "../bikes/Bikes";
 
 const FeatureBikeCard = ({ bike }: { bike: TBikeProps }) => {
   return (
-    <div className="card card-compact bg-base-100 lg:w-96 shadow-xl">
+    <div className="card card-compact bg-base-100 w-full h-[400px]  shadow-xl">
       <figure>
         <img src={bike.bikeImage} alt={bike.brand} />
       </figure>
@@ -22,8 +22,11 @@ const FeatureBikeCard = ({ bike }: { bike: TBikeProps }) => {
             {bike?.isAvailable ? "Available" : "Not Available"}
           </div>
         </div>
-        <div className="card-actions justify-center">
-          <Link to={`bikes/${bike._id}`} className="btn btn-accent text-white">
+        <div className="card-actions justify-end">
+          <Link
+            to={`bikes/${bike._id}`}
+            className="btn btn-sm btn-accent text-white"
+          >
             Buy Now
           </Link>
         </div>

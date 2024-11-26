@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import notFoundImage from "../../assets/images/landing/404.png";
 import { Link } from "react-router-dom";
 const NotFoundPage: React.FC = () => {
   return (
@@ -10,7 +9,7 @@ const NotFoundPage: React.FC = () => {
       flexDirection={"column"}
     >
       <Box
-        bgImage={notFoundImage}
+        bgImage={`https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732604242/qwlurz7toyosg28m07ed.png`}
         width={"550px"}
         height={"450px"}
         bgSize={"cover"}

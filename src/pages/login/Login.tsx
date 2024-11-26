@@ -9,7 +9,6 @@ import { setUser } from "../../redux/features/auth/authSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Image } from "@chakra-ui/react";
-import logoImage from "../../assets/images/logo.png";
 import { HiArrowLeftCircle } from "react-icons/hi2";
 import { Button, Tooltip } from "antd";
 
@@ -83,7 +82,10 @@ const LoginPage = () => {
               <HiArrowLeftCircle className="text-teal-500" />
             </div>
           </Link>
-          <Image src={logoImage} width={"25%"} />
+          <Image
+            src={`https://res.cloudinary.com/dt9bjjzrd/image/upload/v1732599548/ol8b6oxfmfscs0hi5fwe.png`}
+            width={"25%"}
+          />
           <p className="text-sm font-normal text-gray-700">
             Sign in to continue using Bikehub
           </p>
