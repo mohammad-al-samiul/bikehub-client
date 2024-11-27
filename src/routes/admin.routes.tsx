@@ -5,23 +5,18 @@ import Profile from "../pages/dashboard/user/Profile";
 
 import ReturnBikeList from "../pages/dashboard/admin/ReturnBike";
 import RentalAnalytics from "../pages/dashboard/admin/RentalAnalytics";
-import Settings from "../pages/dashboard/Setting";
+import PaymentHistory from "../pages/dashboard/PaymentHistory";
 
 export const adminPaths = [
-  {
-    name: "Profile",
-    path: "profile",
-    element: <Profile />,
-  },
-  {
-    name: "Setting",
-    path: "setting",
-    element: <Settings />,
-  },
   {
     name: "Rental Analytics",
     path: "rental-analytics",
     element: <RentalAnalytics />,
+  },
+  {
+    name: "Profile",
+    path: "profile",
+    element: <Profile />,
   },
   {
     name: "Manage Bike",
@@ -42,5 +37,10 @@ export const adminPaths = [
         element: <Users />,
       },
     ],
+  },
+  {
+    name: "Payment History",
+    path: "my-payments",
+    element: <PaymentHistory />,
   },
 ];

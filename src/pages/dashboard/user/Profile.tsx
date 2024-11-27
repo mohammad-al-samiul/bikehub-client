@@ -19,6 +19,10 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     if (user) {
       refetch();
@@ -75,6 +79,7 @@ const Profile = () => {
                         isModalOpen={isModalOpen}
                         handleCancel={handleCancel}
                         userInfo={userInfo}
+                        handleOk={handleOk}
                       />
                     </div>
                   </ConfigProvider>
