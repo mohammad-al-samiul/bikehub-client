@@ -18,6 +18,9 @@ import ProtectedRoutes from "../components/layouts/ProtectedRoutes";
 import { userPaths } from "./user.routes";
 import About from "../pages/about/About";
 import NotFoundPage from "../pages/error/NotFoundPage";
+import Review from "../pages/review/Review";
+import WhyChooseMe from "../pages/whyChooseMe/WhyChooseMe";
+import HowToRent from "../pages/home/howToRent/HowToRent";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,18 @@ const router = createBrowserRouter([
       {
         path: "bikes",
         element: <Bikes />,
+      },
+      {
+        path: "reviews",
+        element: <Review />,
+      },
+      {
+        path: "why-us",
+        element: <WhyChooseMe />,
+      },
+      {
+        path: "rental-guide",
+        element: <HowToRent />,
       },
       {
         path: "bikes/:id",

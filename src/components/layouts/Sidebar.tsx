@@ -8,6 +8,7 @@ import { currentToken } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { TUser } from "../../types/user.type";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -60,7 +61,9 @@ const Sidebar: React.FC<TSidebarProps> = ({ toggleTheme = "dark" }) => {
           alignItems: "center",
         }}
       >
-        <h1 className="font-bold text-xl">Bike Hub</h1>
+        <Link to={"/"}>
+          <h1 className="font-bold text-teal-500 text-xl">Bike Hub</h1>
+        </Link>
       </div>
       <Menu
         theme={toggleTheme}

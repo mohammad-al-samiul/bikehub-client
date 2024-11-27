@@ -204,18 +204,18 @@ const BikesManagement: React.FC = () => {
     setIsUpdateModalOpen(false);
   };
 
-  const customTheme = {
-    token: {
-      colorPrimary: "#0d9488", // Change this to your primary color
-    },
-  };
+  // const customTheme = {
+  //   token: {
+  //     colorPrimary: "#0d9488", // Change this to your primary color
+  //   },
+  // };
 
   return (
     <div>
       <div className="flex justify-between items-center">
         <DashboardSectionTitle heading="All Bikes" align="left" />
         <div>
-          <ConfigProvider theme={customTheme}>
+          <ConfigProvider>
             <Button onClick={createShowModal}>Create Bike</Button>
           </ConfigProvider>
           <CreateBikeModal

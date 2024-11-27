@@ -78,6 +78,18 @@ const Navbar = () => {
       path: "bikes",
     },
     {
+      label: "Reviews",
+      path: "reviews",
+    },
+    {
+      label: "Why Us",
+      path: "why-us",
+    },
+    {
+      label: "Rental Guide",
+      path: "rental-guide",
+    },
+    {
       label: "Contact",
       path: "contact",
     },

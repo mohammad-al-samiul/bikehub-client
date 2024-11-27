@@ -19,8 +19,8 @@ export type TUser = {
 
 const customColor = "#108ee9";
 
-const userText = "email: jamal@gmail.com | password: 123456";
-const adminText = "email: alsamiul123@gmail.com | password: password123";
+const userText = "email: jamal@gmail.com  password: 123456";
+const adminText = "email: alsamiul123@gmail.com  password: password123";
 
 const LoginPage = () => {
   const [login] = useLoginMutation();
