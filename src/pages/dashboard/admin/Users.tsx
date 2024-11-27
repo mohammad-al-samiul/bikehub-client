@@ -26,25 +26,24 @@ const Users = () => {
   const { data: userData, isLoading } = useGetAllUsersQuery([]);
   const [deleteUser] = useDeleteUserMutation();
   const [updateUserRole] = useUpdateUserRoleMutation();
+
   if (isLoading) {
     return <Spinner />;
   }
 
   const users = userData?.data;
 
-  // console.log("userData", users);
-
-  const handleDelete = async (bikeId: string) => {
-    const res = await deleteUser(bikeId).unwrap();
+  const handleDelete = async (userId: string) => {
+    const res = await deleteUser(userId).unwrap();
     if (res.success) {
       toast.success("User Deleted Successfully!");
     }
   };
-  const handleUpdate = async (bikeId: string) => {
-    const res = await updateUserRole(bikeId).unwrap();
-    //console.log(res);
+
+  const handleUpdate = async (userId: string) => {
+    const res = await updateUserRole(userId).unwrap();
     if (res?.success) {
-      toast.success("User Role Update successfully!");
+      toast.success("User Role Updated successfully!");
     }
   };
 
@@ -63,33 +62,36 @@ const Users = () => {
       dataIndex: "name",
       key: "name",
       ellipsis: true,
+      responsive: ["xs", "sm"], // Visible on all devices
     },
     {
       title: "User Email",
       dataIndex: "email",
       key: "email",
       ellipsis: true,
+      responsive: ["xs", "sm"], // Visible on all devices
     },
     {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
-      render: (phone: number) => phone.toString(), // Render phone number as a string
+      render: (phone: number) => phone.toString(),
       ellipsis: true,
+      responsive: ["xs", "sm"], // Visible on all devices
     },
     {
       title: "Role",
       dataIndex: "role",
       key: "role",
       ellipsis: true,
+      responsive: ["xs", "sm"], // Visible on all devices
     },
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          {/* Add action buttons here, e.g., edit, delete */}
-
+          {/* User role management buttons */}
           {record?.role === "admin" ? (
             <a>
               <Tooltip title="Make User">
@@ -97,7 +99,7 @@ const Users = () => {
                   title="Promote to Admin"
                   description="Are you sure to Promote this User to Admin?"
                   icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                  onConfirm={() => handleUpdate(record?._id)} // Deleting bike
+                  onConfirm={() => handleUpdate(record?._id)}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -112,7 +114,7 @@ const Users = () => {
                   title="Promote to Admin"
                   description="Are you sure to Demote this Admin to an User?"
                   icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                  onConfirm={() => handleUpdate(record?._id)} // Deleting bike
+                  onConfirm={() => handleUpdate(record?._id)}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -128,7 +130,7 @@ const Users = () => {
                 title="Delete the User"
                 description="Are you sure to delete this User?"
                 icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                onConfirm={() => handleDelete(record?._id)} // Deleting bike
+                onConfirm={() => handleDelete(record?._id)}
                 okText="Yes"
                 cancelText="No"
               >
@@ -138,6 +140,7 @@ const Users = () => {
           </a>
         </Space>
       ),
+      responsive: ["xs", "sm"], // Visible on all devices
     },
   ];
 
@@ -148,6 +151,7 @@ const Users = () => {
         columns={columns}
         rowKey="_id"
         loading={isLoading}
+        scroll={{ x: "max-content" }} // Allow horizontal scrolling on small screens
       />
     </div>
   );

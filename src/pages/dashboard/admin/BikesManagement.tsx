@@ -137,9 +137,13 @@ const BikesManagement: React.FC = () => {
 
   const handleChange: OnChange = (_, filters, sorter) => {
     setFilteredInfo(filters);
-    setSortedInfo(sorter);
-  };
 
+    if (Array.isArray(sorter)) {
+      setSortedInfo(sorter[0]);
+    } else {
+      setSortedInfo(sorter);
+    }
+  };
   const clearFilters = () => setFilteredInfo({});
   const clearAll = () => {
     setFilteredInfo({});
