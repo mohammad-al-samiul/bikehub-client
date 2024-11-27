@@ -1,6 +1,5 @@
 import { RiMotorbikeFill } from "react-icons/ri";
 import { useGetAllUsersQuery } from "../../redux/features/auth/authApi";
-import { useGetRentAllBikeQuery } from "../../redux/features/rent/rentApi";
 import { TRental } from "../../types/rental.type";
 import { BookPlus, CircleDollarSign, Users } from "lucide-react";
 import DStatCard from "./DStatCard";

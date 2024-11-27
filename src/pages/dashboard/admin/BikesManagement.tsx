@@ -1,32 +1,28 @@
+import React, { useState } from "react";
 import {
   Button,
   ConfigProvider,
-  message,
-  Popconfirm,
   Space,
   Table,
-  TableColumnsType,
-  TableProps,
   Tooltip,
+  Popconfirm,
+  message,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import { Edit, Trash } from "lucide-react";
 import {
   useDeleteBikeMutation,
   useGetBikesQuery,
 } from "../../../redux/features/bike/bikeApi";
 import Spinner from "../../../components/ui/spinner/Spinner";
-import { Edit, Trash } from "lucide-react";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import CreateBikeModal from "./CreateBikeModal";
 import UpdateBikeModal from "./UpdateBikeModal";
 import { toast } from "sonner";
+import type { TableColumnsType, TableProps } from "antd";
 
 type OnChange = NonNullable<TableProps<DataType>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
-
-type GetSingle<T> = T extends (infer U)[] ? U : never;
-type Sorts = GetSingle<Parameters<OnChange>[2]>;
 
 type DataType = {
   key: string;
@@ -39,67 +35,58 @@ type DataType = {
   status?: string;
   year: number;
 };
+type SortState = {
+  order?: "ascend" | "descend" | null;
+  columnKey?: React.Key;
+};
 
 const BikesManagement: React.FC = () => {
   const [filteredInfo, setFilteredInfo] = useState<Filters>({});
-  const [sortedInfo, setSortedInfo] = useState<Sorts>({});
+  const [sortedInfo, setSortedInfo] = useState<SortState>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedBikeId, setSelectedBikeId] = useState<string | null>();
+  const [selectedBikeId, setSelectedBikeId] = useState<string | null>(null);
 
   const { data: BikesData, isLoading } = useGetBikesQuery([]);
-
   const [deleteBike] = useDeleteBikeMutation();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  if (isLoading) return <Spinner />;
 
-  const bikes = BikesData?.data;
+  const bikes = BikesData?.data || [];
 
   const handleDelete = async (bikeId: string) => {
     try {
       const res = await deleteBike(bikeId).unwrap();
-      // console.log(res);
-      if (res.success) {
-        toast.success("Bike deleted successfully!");
-      }
+      if (res.success) toast.success("Bike deleted successfully!");
     } catch (error) {
       message.error("An error occurred while deleting the bike.");
     }
   };
 
-  const data: DataType[] = bikes?.map((bike: DataType) => ({
-    key: bike?._id,
-    _id: bike?._id,
-    name: bike?.name,
-    brand: bike?.brand,
-    model: bike?.model,
-    status: bike?.isAvailable ? "Available" : "Not Available",
-    year: bike?.year,
-    pricePerHour: bike?.pricePerHour,
+  const data: DataType[] = bikes.map((bike: DataType) => ({
+    key: bike._id,
+    _id: bike._id,
+    name: bike.name,
+    brand: bike.brand,
+    model: bike.model,
+    status: bike.isAvailable ? "Available" : "Not Available",
+    year: bike.year,
+    pricePerHour: bike.pricePerHour,
   }));
 
   const columns: TableColumnsType<DataType> = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      ellipsis: true,
-    },
+    { title: "Name", dataIndex: "name", key: "name", ellipsis: true },
     {
       title: "Brand",
       dataIndex: "brand",
       key: "brand",
-      filters: Array.from(new Set(data?.map((bike) => bike?.brand))).map(
-        (brand) => ({
-          text: brand,
-          value: brand,
-        })
-      ),
+      filters: [...new Set(data.map((bike) => bike.brand))].map((brand) => ({
+        text: brand,
+        value: brand,
+      })),
       filteredValue: filteredInfo.brand || null,
       onFilter: (value, record) => record.brand.includes(value as string),
-      sorter: (a, b) => a.brand.length - b.brand.length,
+      sorter: (a, b) => a.brand.localeCompare(b.brand),
       sortOrder: sortedInfo.columnKey === "brand" ? sortedInfo.order : null,
       ellipsis: true,
     },
@@ -112,17 +99,12 @@ const BikesManagement: React.FC = () => {
         sortedInfo.columnKey === "pricePerHour" ? sortedInfo.order : null,
       ellipsis: true,
     },
-    {
-      title: "Year",
-      dataIndex: "year",
-      key: "year",
-      ellipsis: true,
-    },
+    { title: "Year", dataIndex: "year", key: "year", ellipsis: true },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      sorter: (a, b) => a.status?.length! - b.status?.length!,
+      sorter: (a, b) => a.status!.localeCompare(b.status!),
       sortOrder: sortedInfo.columnKey === "status" ? sortedInfo.order : null,
     },
     {
@@ -130,119 +112,84 @@ const BikesManagement: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>
-            <Tooltip title="Edit Bike">
-              <Edit
-                onClick={() => updateShowModal(record?._id)}
-                className="text-yellow-500"
-              />
-            </Tooltip>
-          </a>
-          <a>
-            <Tooltip title="Delete Bike">
-              <Popconfirm
-                title="Delete the Bike"
-                description="Are you sure to delete this bike?"
-                icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                onConfirm={() => handleDelete(record?._id)} // Deleting bike
-                okText="Yes"
-                cancelText="No"
-              >
-                <Trash className="text-red-500" />
-              </Popconfirm>
-            </Tooltip>
-          </a>
+          <Tooltip title="Edit Bike">
+            <Edit
+              onClick={() => updateShowModal(record._id)}
+              className="text-yellow-500"
+            />
+          </Tooltip>
+          <Tooltip title="Delete Bike">
+            <Popconfirm
+              title="Delete the Bike"
+              description="Are you sure to delete this bike?"
+              icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+              onConfirm={() => handleDelete(record._id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Trash className="text-red-500" />
+            </Popconfirm>
+          </Tooltip>
         </Space>
       ),
     },
   ];
 
-  const handleChange: OnChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
+  const handleChange: OnChange = (_, filters, sorter) => {
     setFilteredInfo(filters);
-    setSortedInfo(sorter as Sorts);
+    setSortedInfo(sorter);
   };
 
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-
+  const clearFilters = () => setFilteredInfo({});
   const clearAll = () => {
     setFilteredInfo({});
     setSortedInfo({});
   };
+  const setPriceSort = () =>
+    setSortedInfo({ order: "descend", columnKey: "pricePerHour" });
 
-  const setPriceSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "pricePerHour",
-    });
-  };
-
-  const createShowModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
+  const createShowModal = () => setIsModalOpen(true);
   const updateShowModal = (bikeId: string) => {
     setSelectedBikeId(bikeId);
     setIsUpdateModalOpen(true);
   };
 
-  const handleUpdateOk = () => {
-    setIsUpdateModalOpen(false);
-  };
-
-  const handleUpdateCancel = () => {
-    setIsUpdateModalOpen(false);
-  };
-
-  // const customTheme = {
-  //   token: {
-  //     colorPrimary: "#0d9488", // Change this to your primary color
-  //   },
-  // };
-
   return (
-    <div>
-      <div className="flex justify-between items-center">
+    <div className="p-2 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <DashboardSectionTitle heading="All Bikes" align="left" />
-        <div>
-          <ConfigProvider>
-            <Button onClick={createShowModal}>Create Bike</Button>
-          </ConfigProvider>
-          <CreateBikeModal
-            handleCancel={handleCancel}
-            handleOk={handleOk}
-            isModalOpen={isModalOpen}
-          />
-        </div>
+        <ConfigProvider>
+          <Button className="mb-2" onClick={createShowModal}>
+            Create Bike
+          </Button>
+        </ConfigProvider>
       </div>
-      <>
-        <Space style={{ marginBottom: 16 }}>
-          <Button onClick={setPriceSort}>Sort Price</Button>
-          <Button onClick={clearFilters}>Clear filters</Button>
-          <Button onClick={clearAll}>Clear filters and sorters</Button>
-        </Space>
-        <Table<DataType>
-          columns={columns}
-          dataSource={data}
-          onChange={handleChange}
-        />
-        <UpdateBikeModal
-          bikeId={selectedBikeId!}
-          handleCancel={handleUpdateCancel}
-          handleOk={handleUpdateOk}
-          isModalOpen={isUpdateModalOpen}
-        />
-      </>
+
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Button onClick={setPriceSort}>Sort Price</Button>
+        <Button onClick={clearFilters}>Clear filters</Button>
+        <Button onClick={clearAll}>Clear filters and sorters</Button>
+      </Space>
+
+      <Table<DataType>
+        columns={columns}
+        dataSource={data}
+        onChange={handleChange}
+        scroll={{ x: "max-content" }}
+      />
+
+      <CreateBikeModal
+        handleCancel={() => setIsModalOpen(false)}
+        handleOk={() => setIsModalOpen(false)}
+        isModalOpen={isModalOpen}
+      />
+
+      <UpdateBikeModal
+        bikeId={selectedBikeId!}
+        handleCancel={() => setIsUpdateModalOpen(false)}
+        handleOk={() => setIsUpdateModalOpen(false)}
+        isModalOpen={isUpdateModalOpen}
+      />
     </div>
   );
 };

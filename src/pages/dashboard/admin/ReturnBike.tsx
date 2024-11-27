@@ -1,4 +1,3 @@
-// src/components/ReturnBikeList.tsx
 import React, { useEffect, useState } from "react";
 import { Table, Space, TableColumnsType, Button } from "antd";
 import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
@@ -38,7 +37,6 @@ const ReturnBikeList: React.FC = () => {
   }
 
   const rentals = rentalData?.data;
-  // console.log("rentals", rentals);
 
   const data: DataType[] = rentals?.map((rental: DataType) => ({
     key: rental?.bikeId?._id,
@@ -73,7 +71,8 @@ const ReturnBikeList: React.FC = () => {
       title: "Start Time",
       dataIndex: "startTime",
       key: "startTime",
-      render: (time: string) => time.toLocaleString(),
+      render: (time: string) =>
+        new Date(time).toISOString().replace(".000", ""),
       ellipsis: true,
     },
     {
@@ -88,7 +87,6 @@ const ReturnBikeList: React.FC = () => {
       key: "totalCost",
       ellipsis: true,
     },
-
     {
       title: "Action",
       key: "isReturned",
@@ -108,7 +106,16 @@ const ReturnBikeList: React.FC = () => {
 
   return (
     <div>
-      <Table dataSource={data} columns={columns} rowKey="_id" />
+      <Table
+        dataSource={data}
+        columns={columns}
+        rowKey="_id"
+        scroll={{ x: "max-content" }} // Horizontal scroll for small devices
+        pagination={{
+          pageSize: 5, // Limit rows per page
+          responsive: true,
+        }}
+      />
       <CalculateRentalCostModal
         rentalId={rentalId}
         isModalOpen={isCalculationModalOpen}
