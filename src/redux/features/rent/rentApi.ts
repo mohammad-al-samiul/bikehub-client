@@ -21,7 +21,7 @@ const rentApi = baseApi.injectEndpoints({
     }),
 
     getRentAllBike: builder.query({
-      providesTags: ["rental", "user"],
+      providesTags: ["rental", "payment", "user"],
       query: () => ({
         url: `/rentals`,
         method: "GET",

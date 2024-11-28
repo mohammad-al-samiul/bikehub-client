@@ -10,15 +10,14 @@ const paymentApi = baseApi.injectEndpoints({
         body: paymentInfo,
       }),
     }),
-    getPaymentByUser: builder.query({
+    getPayment: builder.query({
       providesTags: ["payment"],
       query: () => ({
-        url: "/get-payment",
+        url: "/payment/get-payments",
         method: "GET",
       }),
     }),
   }),
 });
 
-export const { useCreatePaymentMutation, useGetPaymentByUserQuery } =
-  paymentApi;
+export const { useCreatePaymentMutation, useGetPaymentQuery } = paymentApi;

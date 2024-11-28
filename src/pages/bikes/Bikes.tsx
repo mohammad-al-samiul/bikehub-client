@@ -23,11 +23,14 @@ const Bikes = () => {
     return <Spinner />;
   }
   return (
-    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h- justify-items-center">
-      {bikes &&
-        bikes?.map((bike: TBikeProps) => (
-          <BikeCard key={bike._id} bike={bike} />
-        ))}
+    <div className="mt-10">
+      <h2 className="text-xl lg:text-3xl text-center font-bold">All Bikes</h2>
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h- justify-items-center">
+        {bikes &&
+          bikes?.map((bike: TBikeProps) => (
+            <BikeCard key={bike._id} bike={bike} />
+          ))}
+      </div>
     </div>
   );
 };

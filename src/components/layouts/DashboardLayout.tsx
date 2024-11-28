@@ -3,9 +3,9 @@ import React from "react";
 import { Dropdown, Layout, MenuProps, theme } from "antd";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { CircleUserRound, Home, LogOut, User } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { currentUser, logOut } from "../../redux/features/auth/authSlice";
+import { CircleUserRound, Home, LogOut } from "lucide-react";
+import { useAppDispatch } from "../../redux/hook";
+import { logOut } from "../../redux/features/auth/authSlice";
 
 import { toast } from "sonner";
 const { Header, Content } = Layout;
@@ -16,7 +16,6 @@ const DashboardLayout: React.FC = () => {
   } = theme.useToken();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user: Record<string, any> | null = useAppSelector(currentUser);
 
   const handleLogout = () => {
     dispatch(logOut());
@@ -25,22 +24,22 @@ const DashboardLayout: React.FC = () => {
   };
 
   const items: MenuProps["items"] = [
-    {
-      label: (
-        <div>
-          <Link
-            to={`/${user?.role}/profile`}
-            className="flex items-center gap-2 hover:text-accent"
-          >
-            <span>
-              <User size={14} />
-            </span>
-            Profile
-          </Link>
-        </div>
-      ),
-      key: "0",
-    },
+    // {
+    //   label: (
+    //     <div>
+    //       <Link
+    //         to={`/${user?.role}/profile`}
+    //         className="flex items-center gap-2 hover:text-accent"
+    //       >
+    //         <span>
+    //           <User size={14} />
+    //         </span>
+    //         Profile
+    //       </Link>
+    //     </div>
+    //   ),
+    //   key: "0",
+    // },
     {
       label: (
         <div className="">

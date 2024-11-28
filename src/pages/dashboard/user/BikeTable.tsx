@@ -61,7 +61,7 @@ const BikeTable = () => {
     {
       title: "Image",
       render: ({ bikeImage }: { bikeImage: string }) => (
-        <img className="w-[80px]" src={bikeImage} alt="" />
+        <img className="w-[80px]" src={bikeImage} alt="Bike" />
       ),
       key: "bikeImage",
     },
@@ -96,7 +96,6 @@ const BikeTable = () => {
         sortedInfo.columnKey === "pricePerHour" ? sortedInfo.order : null,
       ellipsis: true,
     },
-
     {
       title: "Status",
       dataIndex: "status",
@@ -144,18 +143,20 @@ const BikeTable = () => {
   return (
     <div>
       <DashboardSectionTitle heading="All Bikes" align="left" />
-      <>
-        <Space style={{ marginBottom: 16 }}>
-          <Button onClick={setPriceSort}>Sort Price</Button>
-          <Button onClick={clearFilters}>Clear filters</Button>
-          <Button onClick={clearAll}>Clear filters and sorters</Button>
-        </Space>
+      <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:justify-start mb-4">
+        <Button onClick={setPriceSort}>Sort Price</Button>
+        <Button onClick={clearFilters}>Clear Filters</Button>
+        <Button onClick={clearAll}>Clear Filters and Sorters</Button>
+      </div>
+      {/* Enable horizontal scrolling for the table */}
+      <div className="overflow-x-auto">
         <Table<DataType>
           columns={columns}
           dataSource={data}
           onChange={handleChange}
+          scroll={{ x: 1000 }} // Adjust to fit column widths
         />
-      </>
+      </div>
     </div>
   );
 };

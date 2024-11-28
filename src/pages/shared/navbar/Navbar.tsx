@@ -7,6 +7,7 @@ import { useAppDispatch } from "../../../redux/hook";
 import { toast } from "sonner";
 import { CircleUserRound, Home, LogOut, User } from "lucide-react";
 import { Dropdown, MenuProps } from "antd";
+import { RiDashboardLine } from "react-icons/ri";
 
 // import { useContext } from "react";
 // import { ThemeContext } from "../../../context/ThemeProvider";
@@ -28,6 +29,22 @@ const Navbar = () => {
       label: (
         <div>
           <Link
+            to={`/${user?.role}/rental-analytics`}
+            className="flex items-center gap-2 hover:text-accent"
+          >
+            <span>
+              <RiDashboardLine size={14} />
+            </span>
+            Dashboard
+          </Link>
+        </div>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <div>
+          <Link
             to={`/${user?.role}/profile`}
             className="flex items-center gap-2 hover:text-accent"
           >
@@ -38,7 +55,7 @@ const Navbar = () => {
           </Link>
         </div>
       ),
-      key: "0",
+      key: "1",
     },
     {
       label: (
@@ -52,7 +69,7 @@ const Navbar = () => {
         </div>
       ),
 
-      key: "1",
+      key: "2",
     },
     {
       type: "divider",

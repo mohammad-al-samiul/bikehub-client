@@ -2,10 +2,10 @@ import { useEffect, useMemo } from "react";
 import { Tabs, TabsProps } from "antd";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { useGetRentAllBikeQuery } from "../../../redux/features/rent/rentApi";
-import { useGetPaymentByUserQuery } from "../../../redux/features/payment/paymentApi";
 import DashboardSectionTitle from "../../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
 import UnpaidRentals from "./UnpaidRentals";
 import PaidRentals from "./PaidRentals";
+import { useGetPaymentQuery } from "../../../redux/features/payment/paymentApi";
 
 export type TTableProps = {
   startTime: string;
@@ -26,8 +26,9 @@ const MyRentals = () => {
     isFetching,
     refetch,
   } = useGetRentAllBikeQuery(undefined);
-  const { data: paymentData, refetch: refetchPaymentData } =
-    useGetPaymentByUserQuery([]);
+  const { data: paymentData, refetch: refetchPaymentData } = useGetPaymentQuery(
+    []
+  );
 
   // Effect to refetch rental data when payment data changes
   useEffect(() => {
@@ -85,7 +86,7 @@ const MyRentals = () => {
 
 // Helper function to map rental data
 const mapRentalData = (rental: TTableProps) => ({
-  key: rental._id,
+  key: rental._id, // Make sure key is unique
   bikeName: rental.bikeId.name,
   bikeId: rental.bikeId._id,
   userEmail: rental.userEmail,
