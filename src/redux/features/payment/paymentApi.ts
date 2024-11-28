@@ -13,7 +13,7 @@ const paymentApi = baseApi.injectEndpoints({
     getPayment: builder.query({
       providesTags: ["payment"],
       query: () => ({
-        url: "/payment/get-payments",
+        url: "/get-payments",
         method: "GET",
       }),
     }),

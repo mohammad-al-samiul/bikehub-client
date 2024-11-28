@@ -10,6 +10,7 @@ import BForm from "../../../components/form/BForm";
 import BInput from "../../../components/form/BInput";
 import BFileInput from "../../../components/form/BFileInput";
 import BSubmit from "../../../components/form/BSubmit";
+import BTextArea from "../../../components/form/BTextArea";
 
 type TUpdateBikeModalProps = {
   bikeId: string;
@@ -79,20 +80,29 @@ const UpdateBikeModal: React.FC<TUpdateBikeModalProps> = ({
   };
 
   return (
-    <Modal open={isModalOpen} onCancel={handleCancel} footer="">
+    <Modal width={800} open={isModalOpen} onCancel={handleCancel} footer="">
       <h1 className="text-xl font-bold text-center">Update Bike</h1>
       <div className="w-full ">
         <BForm onSubmit={onSubmit} defaultValues={defaultValues}>
-          <BInput type="text" name="name" label="Name" />
-          <BInput type="text" name="brand" label="Brand" />
-          <BInput type="text" name="model" label="Model" />
-          <BInput type="number" name="cc" label="Engine(cc)" />
-          <BInput type="number" name="pricePerHour" label="Price (Hr)" />
-          <BInput type="number" name="year" label="Year" />
-          <BInput type="text" name="description" label="Description" />
+          <div className="lg:flex gap-3">
+            <BInput type="text" name="name" label="Name" />
+            <BInput type="text" name="brand" label="Brand" />
+          </div>
+          <div className="lg:flex gap-3">
+            <BInput type="text" name="model" label="Model" />
+            <BInput type="number" name="cc" label="Engine(cc)" />
+          </div>
+
+          <div className="lg:flex gap-3">
+            <BInput type="number" name="pricePerHour" label="Price (Hr)" />
+            <BInput type="number" name="year" label="Year" />
+          </div>
+          <BTextArea name="description" label="Description" />
           <BFileInput name="image" label="Bike Image" />
 
-          <BSubmit value="Update Bike" />
+          <div className="mt-3">
+            <BSubmit value="Update Bike" />
+          </div>
         </BForm>
       </div>
     </Modal>
