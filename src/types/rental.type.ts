@@ -11,5 +11,6 @@ export type TRental = {
   totalCost: number;
   userId: TUser;
   paymentStatus: string;
+
   _id: string;
 };

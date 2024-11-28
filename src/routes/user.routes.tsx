@@ -3,7 +3,14 @@ import Profile from "../pages/dashboard/user/Profile";
 import MyRentals from "../pages/dashboard/user/MyRentals";
 import PaymentHistory from "../pages/dashboard/PaymentHistory";
 
+import UserRentalAnalytics from "../pages/dashboard/user/UserRentalAnalytics";
+
 export const userPaths = [
+  {
+    name: "Rental Analytics",
+    path: "rental-analytics",
+    element: <UserRentalAnalytics />,
+  },
   {
     name: "Profile",
     path: "profile",
