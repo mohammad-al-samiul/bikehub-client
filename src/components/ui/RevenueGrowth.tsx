@@ -2,12 +2,10 @@ import { TRental } from "../../types/rental.type";
 import Chart from "react-apexcharts";
 
 const RevenueGrowth = ({ rentalData }: { rentalData: TRental[] }) => {
-  // Slice last 10 rentals and extract revenue values, ensuring proper number formatting
   const revenues = rentalData
     ?.slice(rentalData.length - 10, rentalData.length)
     ?.map((item) => Number(item.totalCost.toFixed(1)));
 
-  // Function to get ordinal suffix for x-axis labels (1st, 2nd, 3rd, etc.)
   const getOrdinalSuffix = (n: number) => {
     const suffix = ["th", "st", "nd", "rd"];
     const val = n % 100;

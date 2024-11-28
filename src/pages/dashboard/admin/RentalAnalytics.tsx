@@ -33,16 +33,13 @@ const RentalAnalytics = () => {
       <section>
         <AdminStats rentalData={rentalData} />
         <div className="flex lg:flex-row flex-col justify-between items-center gap-8 mt-16">
-          <div className="lg:w-[1000px] md:w-[450px] sm:w-[450px] w-[250px]">
+          <div className="lg:w-[1000px] md:w-[450px] sm:w-[450px] w-[320px]">
             <RevenueGrowth rentalData={rentalData!} />
           </div>
-          <div className="sm:w-[350px] w-[250px]">
+          <div className="sm:w-[350px] w-[300px]">
             <BikeBrandsChart title="Bikes by brand" brandCounts={brandCounts} />
           </div>
         </div>
-        {/* <div className="mt-14">
-          <Rentals />
-        </div> */}
       </section>
     </main>
   );
