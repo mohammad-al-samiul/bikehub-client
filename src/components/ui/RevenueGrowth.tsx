@@ -2,15 +2,26 @@ import { TRental } from "../../types/rental.type";
 import Chart from "react-apexcharts";
 
 const RevenueGrowth = ({ rentalData }: { rentalData: TRental[] }) => {
+  // Slice last 10 rentals and extract revenue values, ensuring proper number formatting
   const revenues = rentalData
-    ?.slice(rentalData?.length - 10, rentalData?.length)
+    ?.slice(rentalData.length - 10, rentalData.length)
     ?.map((item) => Number(item.totalCost.toFixed(1)));
+
+  // Function to get ordinal suffix for x-axis labels (1st, 2nd, 3rd, etc.)
+  const getOrdinalSuffix = (n: number) => {
+    const suffix = ["th", "st", "nd", "rd"];
+    const val = n % 100;
+    return `${n}${suffix[(val - 20) % 10] || suffix[val] || suffix[0]}`;
+  };
+
+  // Prepare categories for the x-axis
+  const categories = revenues?.map((_, i) => getOrdinalSuffix(i + 1));
 
   const RevenueGrowthData = {
     series: [
       {
         name: "Revenue",
-        data: revenues, // example counts per day
+        data: revenues, // Data for revenue (total cost per rental)
       },
     ],
   };
@@ -34,24 +45,21 @@ const RevenueGrowth = ({ rentalData }: { rentalData: TRental[] }) => {
       },
     },
     xaxis: {
-      categories: revenues?.map(
-        (_item, i) =>
-          `${
-            (i === 0 && "1st") ||
-            (i === 1 && "2nd") ||
-            (i === 2 && "3rd") ||
-            (i === 3 ? "4rth" : `${i + 1}th`)
-          }`
-      ),
+      categories: categories, // Use ordinal labels for the x-axis
     },
     title: {
-      text: "Revenue of the last 10 rentals",
+      text: "Revenue of the Last 10 Rentals",
     },
     stroke: {
-      curve: "smooth",
+      curve: "smooth", // Smooth line curve for better presentation
     },
     dataLabels: {
-      enabled: false,
+      enabled: false, // Disable data labels for cleaner appearance
+    },
+    yaxis: {
+      title: {
+        text: "Revenue ($)",
+      },
     },
   };
 

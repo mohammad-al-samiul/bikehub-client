@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Space, Table } from "antd";
 
 import type { TableColumnsType, TableProps } from "antd";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { useGetPaymentQuery } from "../../redux/features/payment/paymentApi";
 import DashboardSectionTitle from "../../components/ui/dashboardSectionTitlte/DashboardSectionTitle";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../redux/features/auth/authSlice";
 
 type OnChange = NonNullable<TableProps<DataType>["onChange"]>;
 type Filters = Parameters<OnChange>[1];
@@ -25,11 +27,22 @@ type SortState = {
 };
 
 const PaymentManagement: React.FC = () => {
+  const user = useSelector(currentUser);
   const [filteredInfo, setFilteredInfo] = useState<Filters>({});
   const [sortedInfo, setSortedInfo] = useState<SortState>({});
 
-  const { data: paymentData, isLoading } = useGetPaymentQuery(undefined);
+  const {
+    data: paymentData,
+    isLoading,
+    refetch,
+  } = useGetPaymentQuery(undefined);
   //console.log(paymentData);
+
+  useEffect(() => {
+    if (user) {
+      refetch();
+    }
+  }, [user]);
 
   if (isLoading) return <Spinner />;
 
