@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Modal } from "antd";
 import React, { Dispatch } from "react";
 import BForm from "../../components/form/BForm";

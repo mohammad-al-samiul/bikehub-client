@@ -18,7 +18,7 @@ const BButtonSmallWhite = ({
       onClick={onClick}
       type="link"
       href={link}
-      className={`RButtonWhite bg-accentColor border-accentColor border-2 text-white font-medium hover:text-primaryColor rounded-none px-6 py-5 ${className}`}
+      className={`border-2 text-white font-medium hover:text-primaryColor rounded-none px-6 py-5 ${className}`}
       size={size || "large"}
     >
       {children}

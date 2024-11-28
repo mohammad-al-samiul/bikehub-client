@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useEffect } from "react";
 import { Box, Center, Heading, Text } from "@chakra-ui/react";
 import { IconType } from "react-icons";

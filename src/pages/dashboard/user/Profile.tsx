@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useGetMyProfileQuery } from "../../../redux/features/auth/authApi";
 import Spinner from "../../../components/ui/spinner/Spinner";
 import { Button, ConfigProvider, Divider } from "antd";

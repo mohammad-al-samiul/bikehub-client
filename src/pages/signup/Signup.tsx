@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import BForm from "../../components/form/BForm";
 import BInput from "../../components/form/BInput";
@@ -20,7 +21,7 @@ export type TUser = {
 const Signup = () => {
   const [signup] = useSignupMutation();
   const dispatch = useAppDispatch();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userInfo = {

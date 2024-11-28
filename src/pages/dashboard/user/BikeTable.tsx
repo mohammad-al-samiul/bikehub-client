@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { useState } from "react";
 
 import { useGetBikesQuery } from "../../../redux/features/bike/bikeApi";

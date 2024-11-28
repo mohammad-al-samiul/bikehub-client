@@ -4,9 +4,10 @@ type TInputProps = {
   type: string;
   name: string;
   label: string;
+  required?: boolean;
 };
 
-const BInput = ({ type, name, label }: TInputProps) => {
+const BInput = ({ type, name, label, required = false }: TInputProps) => {
   const {
     formState: { errors },
   } = useFormContext();
@@ -20,7 +21,7 @@ const BInput = ({ type, name, label }: TInputProps) => {
         name={name}
         defaultValue=""
         rules={{
-          required: `${label} is required`,
+          required: required ? `${label} is required` : false, // Conditional required validation
         }}
         render={({ field }) => (
           <input

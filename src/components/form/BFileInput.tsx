@@ -6,6 +6,7 @@ const { Dragger } = Upload;
 type TFileInputProps = {
   name: string;
   label: string;
+  required?: boolean;
 };
 
 const props: UploadProps = {
@@ -28,7 +29,7 @@ const props: UploadProps = {
   },
 };
 
-const BFileInput = ({ name, label }: TFileInputProps) => {
+const BFileInput = ({ name, label, required = false }: TFileInputProps) => {
   const {
     formState: { errors },
   } = useFormContext();
@@ -43,7 +44,7 @@ const BFileInput = ({ name, label }: TFileInputProps) => {
         name={name}
         defaultValue={null}
         rules={{
-          required: `${label} is required`,
+          required: required ? `${label} is required` : false, // Conditional required validation
         }}
         render={({ field: { onChange, value } }) => (
           <Dragger

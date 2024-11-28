@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import BForm from "../../components/form/BForm";
 import BInput from "../../components/form/BInput";
@@ -26,8 +27,8 @@ const LoginPage = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
 
-  let navigate = useNavigate();
-  let location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const defaultValues = {
     email: "",

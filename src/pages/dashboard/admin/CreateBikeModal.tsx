@@ -7,6 +7,7 @@ import BSubmit from "../../../components/form/BSubmit";
 import BFileInput from "../../../components/form/BFileInput";
 import { useCreateBikeMutation } from "../../../redux/features/bike/bikeApi";
 import { toast } from "sonner";
+import BTextArea from "../../../components/form/BTextArea";
 
 export type TCreateBikeModalProps = {
   isModalOpen: boolean;
@@ -50,19 +51,45 @@ const CreateBikeModal: React.FC<TCreateBikeModalProps> = ({
     }
   };
   return (
-    <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer="">
+    <Modal
+      open={isModalOpen}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      width={800}
+      footer=""
+    >
       <h1 className="text-xl font-bold text-center">Create Bike</h1>
       <div className="w-full ">
         <BForm onSubmit={onSubmit}>
-          <BInput type="text" name="name" label="Name" />
-          <BInput type="text" name="brand" label="Brand" />
-          <BInput type="text" name="model" label="Model" />
-          <BInput type="number" name="cc" label="Engine(cc)" />
-          <BInput type="number" name="pricePerHour" label="Price (Hr)" />
-          <BInput type="number" name="year" label="Year" />
-          <BInput type="text" name="description" label="Description" />
-          <BFileInput name="image" label="Bike Image" />
-          <BSubmit value="Create Bike" />
+          <div className="lg:flex gap-3">
+            <BInput required={true} type="text" name="name" label="Name" />
+            <BInput required={true} type="text" name="brand" label="Brand" />
+          </div>
+          <div className="lg:flex gap-3">
+            <BInput required={true} type="text" name="model" label="Model" />
+            <BInput
+              required={true}
+              type="number"
+              name="cc"
+              label="Engine(cc)"
+            />
+          </div>
+          <div className="lg:flex gap-3">
+            <BInput
+              required={true}
+              type="number"
+              name="pricePerHour"
+              label="Price (Hr)"
+            />
+            <BInput required={true} type="number" name="year" label="Year" />
+          </div>
+          <div className="lg:flex flex-col gap-3 lg:mb-8">
+            <BTextArea required={true} name="description" label="Description" />
+            <BFileInput required={true} name="image" label="Bike Image" />
+          </div>
+          <div className="mt-3">
+            <BSubmit value="Create Bike" />
+          </div>
         </BForm>
       </div>
     </Modal>

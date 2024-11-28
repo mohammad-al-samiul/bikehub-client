@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo } from "react";
 import { Tabs, TabsProps } from "antd";
 import Spinner from "../../../components/ui/spinner/Spinner";

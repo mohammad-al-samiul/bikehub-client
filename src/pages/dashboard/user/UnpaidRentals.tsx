@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Table } from "antd";
 import { useMemo } from "react";
 import { TBike } from "../../../types/bike.type";

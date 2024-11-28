@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
   Button,
@@ -58,7 +59,7 @@ const BikesManagement: React.FC = () => {
     try {
       const res = await deleteBike(bikeId).unwrap();
       if (res.success) toast.success("Bike deleted successfully!");
-    } catch (error) {
+    } catch (error: any) {
       message.error("An error occurred while deleting the bike.");
     }
   };

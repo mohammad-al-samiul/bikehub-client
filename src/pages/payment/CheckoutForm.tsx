@@ -43,7 +43,6 @@ const CheckoutForm = () => {
 
     if (error) {
       setErrorMessage(error.message!);
-    } else {
     }
   };
   return (
