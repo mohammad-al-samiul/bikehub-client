@@ -9,7 +9,7 @@ import Spinner from "../../components/ui/spinner/Spinner";
 import { Link } from "react-router-dom";
 
 const FeatureBike = () => {
-  const { data, isLoading } = useGetBikesQuery([]);
+  const { data, isLoading } = useGetBikesQuery({});
 
   const bikes = data?.data;
 
@@ -55,7 +55,7 @@ const FeatureBike = () => {
         </Center>
       </Box>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center mx-5">
-        {bikes?.slice(0, 6).map((bike: TBikeProps, i: string) => (
+        {bikes?.docs?.slice(0, 8).map((bike: TBikeProps, i: string) => (
           <FeatureBikeCard key={i} bike={bike} />
         ))}
       </div>

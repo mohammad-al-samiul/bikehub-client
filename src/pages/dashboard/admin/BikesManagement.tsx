@@ -153,7 +153,7 @@ const BikesManagement: React.FC = () => {
   const setPriceSort = () =>
     setSortedInfo({ order: "descend", columnKey: "pricePerHour" });
 
-  const createShowModal = () => setIsModalOpen(true);
+  
   const updateShowModal = (bikeId: string) => {
     setSelectedBikeId(bikeId);
     setIsUpdateModalOpen(true);

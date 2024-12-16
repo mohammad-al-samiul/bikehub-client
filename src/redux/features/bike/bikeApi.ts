@@ -12,9 +12,25 @@ const bikeApi = baseApi.injectEndpoints({
     }),
     getBikes: builder.query({
       providesTags: ["bike"],
-      query: () => ({
+      query: ({
+        search,
+        category,
+        page = 1, // default to 1 if page is not provided
+        limit = 8, // default to 10 if limit is not provided
+      }: {
+        search?: string;
+        category?: string;
+        page?: number;
+        limit?: number;
+      }) => ({
         url: "/bikes",
         method: "GET",
+        params: {
+          search,
+          category,
+          page: page.toString(), // Convert to string
+          limit: limit.toString(), // Convert to string
+        },
       }),
     }),
     getSingleBike: builder.query({
