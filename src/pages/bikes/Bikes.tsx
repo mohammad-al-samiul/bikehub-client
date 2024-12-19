@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input, Select, Pagination, Row, Col } from "antd";
-import { useGetBikesQuery } from "../../redux/features/bike/bikeApi";
+import { useGetBikesWithPaginationQuery } from "../../redux/features/bike/bikeApi";
 import BikeCard from "./BikeCard";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { debounce } from "lodash";
@@ -28,7 +28,7 @@ const Bikes = () => {
   const [pageSize, setPageSize] = useState<number>(8);
 
   // Get bikes query
-  const { data, isLoading } = useGetBikesQuery({
+  const { data, isLoading } = useGetBikesWithPaginationQuery({
     search: searchTerm,
     category: selectedCategory,
     page: currentPage,

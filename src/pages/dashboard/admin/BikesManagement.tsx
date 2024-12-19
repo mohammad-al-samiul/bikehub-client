@@ -153,7 +153,6 @@ const BikesManagement: React.FC = () => {
   const setPriceSort = () =>
     setSortedInfo({ order: "descend", columnKey: "pricePerHour" });
 
-  
   const updateShowModal = (bikeId: string) => {
     setSelectedBikeId(bikeId);
     setIsUpdateModalOpen(true);
@@ -164,7 +163,7 @@ const BikesManagement: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <DashboardSectionTitle heading="All Bikes" align="left" />
         <ConfigProvider>
-          <Button className="mb-2" onClick={createShowModal}>
+          <Button className="mb-2" onClick={() => setIsModalOpen(true)}>
             Create Bike
           </Button>
         </ConfigProvider>

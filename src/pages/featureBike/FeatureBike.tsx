@@ -2,14 +2,15 @@ import { Heading, Box, Center } from "@chakra-ui/react";
 import { Reveal } from "../../components/motion/Reveal";
 
 import { TBikeProps } from "../bikes/Bikes";
-import { useGetBikesQuery } from "../../redux/features/bike/bikeApi";
 
 import FeatureBikeCard from "./FeatureBikeCard";
 import Spinner from "../../components/ui/spinner/Spinner";
 import { Link } from "react-router-dom";
 
+import { useGetBikesQuery } from "../../redux/features/bike/bikeApi";
+
 const FeatureBike = () => {
-  const { data, isLoading } = useGetBikesQuery({});
+  const { data, isLoading } = useGetBikesQuery([]);
 
   const bikes = data?.data;
 
@@ -55,7 +56,7 @@ const FeatureBike = () => {
         </Center>
       </Box>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center mx-5">
-        {bikes?.docs?.slice(0, 8).map((bike: TBikeProps, i: string) => (
+        {bikes?.slice(0, 8).map((bike: TBikeProps, i: string) => (
           <FeatureBikeCard key={i} bike={bike} />
         ))}
       </div>
